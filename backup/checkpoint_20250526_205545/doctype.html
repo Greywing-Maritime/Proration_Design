@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Cargo Operations Tube Map</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f5f5f5;
+            overflow-x: auto;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: #1a1a1a;
+            color: white;
+            padding: 25px;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            font-size: 18px;
+            color: #ccc;
+        }
+        
+        .legend {
+            background: white;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 3px solid #e0e0e0;
+        }
+        
+        .legend-section {
+            border-left: 3px solid #ddd;
+            padding-left: 15px;
+            margin-left: 15px;
+        }
+        
+        .legend-section:first-child {
+            border-left: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+        
+        .legend-section h4 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+        
+        .legend-line {
+            width: 45px;
+            height: 8px;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .legend-line.waiting {
+            background: repeating-linear-gradient(
+                45deg,
+                #ccc,
+                #ccc 4px,
+                white 4px,
+                white 8px
+            );
+        }
+        
+        .legend-line.deduction {
+            border: 2px dashed #666;
+            background: transparent;
+        }
+        
+        .map-container {
+            background: white;
+            position: relative;
+            min-height: 4800px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+        }
+        
+        .time-blocks-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+        
+        .time-block {
+            position: absolute;
+            left: 150px;
+            right: 100px;
+            border-radius: 8px;
+            opacity: 0.15;
+            z-index: 1;
+        }
+        
+        .time-block.laytime {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        
+        .time-block.waiting {
+            background: repeating-linear-gradient(
+                45deg,
+                #FFC107,
+                #FFC107 10px,
+                #FFD54F 10px,
+                #FFD54F 20px
+            );
+        }
+        
+        .time-block.deduction {
+            background: repeating-linear-gradient(
+                45deg,
+                #f44336,
+                #f44336 10px,
+                #ef5350 10px,
+                #ef5350 20px
+            );
+        }
+        
+        .time-block-label {
+            position: absolute;
+            right: -90px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        
+        .timeline {
+            position: absolute;
+            left: 20px;
+            top: 100px;
+            font-size: 13px;
+            color: #333;
+            z-index: 15;
+        }
+        
+        .time-marker {
+            position: absolute;
+            left: 0;
+            font-weight: 600;
+            background: white;
+            padding: 4px 8px;
+            border-left: 4px solid #333;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .port-separator {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 140px;
+            background: linear-gradient(to bottom, 
+                rgba(240,240,240,0) 0%, 
+                rgba(240,240,240,1) 20%, 
+                rgba(240,240,240,1) 80%, 
+                rgba(240,240,240,0) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #555;
+            z-index: 10;
+        }
+        
+        .port-separator .transit-info {
+            background: white;
+            padding: 25px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 3px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .port-separator .transit-duration {
+            font-size: 16px;
+            color: #999;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        
+        .port-label {
+            position: absolute;
+            right: 40px;
+            font-size: 28px;
+            font-weight: 800;
+            color: #333;
+            background: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 4px solid;
+            z-index: 12;
+        }
+        
+        .port-label.kuala-tanjung {
+            border-color: #E91E63;
+        }
+        
+        .port-label.kandla {
+            border-color: #9C27B0;
+        }
+        
+        .port-label.port-qasim {
+            border-color: #2196F3;
+        }
+        
+        svg {
+            width: 100%;
+            height: 4800px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .cargo-line {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+            z-index: 20;
+        }
+        
+        .cargo-line.inactive {
+            stroke-dasharray: 12, 6;
+            opacity: 0.4;
+            filter: none;
+        }
+        
+        .cargo-line.waiting {
+            stroke-dasharray: 16, 4;
+            opacity: 0.8;
+        }
+        
+        .cargo-line.deduction {
+            stroke-dasharray: 8, 8;
+            opacity: 0.6;
+        }
+        
+        .flow-arrow {
+            fill: none;
+            stroke-width: 2;
+            opacity: 0.4;
+        }
+        
+        .station {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .station:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.4));
+        }
+        
+        .station-outer {
+            fill: white;
+            stroke: #333;
+            stroke-width: 3;
+        }
+        
+        .station-inner {
+            transition: all 0.3s ease;
+        }
+        
+        .merge-station {
+            fill: #6B7280;
+        }
+        
+        .branch-indicator {
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+            stroke-dasharray: 4, 2;
+            opacity: 0.3;
+        }
+        
+        .station-label {
+            font-size: 15px;
+            font-weight: 700;
+            fill: #333;
+            pointer-events: none;
+        }
+        
+        .station-desc {
+            font-size: 12px;
+            fill: #666;
+            pointer-events: none;
+            font-weight: 500;
+        }
+        
+        .operation-group {
+            fill: none;
+            stroke: #e0e0e0;
+            stroke-width: 2;
+            stroke-dasharray: 8, 4;
+            rx: 15;
+            opacity: 0.5;
+        }
+        
+        .simultaneous-indicator {
+            fill: #FF9800;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .controls {
+            background: white;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            padding: 12px 24px;
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .control-btn:hover {
+            background: #0051D5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .control-btn.active {
+            background: #34C759;
+        }
+        
+        .info-panel {
+            background: white;
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .info-panel h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .voyage-flow {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+        }
+        
+        .flow-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .flow-port {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .flow-arrow-icon {
+            font-size: 24px;
+        }
+        
+        .highlight-ring {
+            fill: none;
+            stroke: #FFD700;
+            stroke-width: 4;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .highlight-ring.active {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { r: 22; opacity: 1; }
+            50% { r: 28; opacity: 0.6; }
+            100% { r: 22; opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cargo Operations Flow Visualization</h1>
+            <div class="subtitle">Vessel: CHEMROAD JOURNEY | Voyage 124 | April - May 2024</div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-section">
+                <h4>Time Block Types</h4>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: #4CAF50;"></div>
+                    <span>Active Laytime</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-line waiting"></div>
+                    <span>Waiting Time</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-line deduction"></div>
+                    <span>Deductions</span>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h4>Station Types</h4>
+                <div class="legend-item">
+                    <svg width="45" height="20">
+                        <circle cx="10" cy="10" r="8" fill="#6B7280" stroke="#333" stroke-width="2"/>
+                    </svg>
+                    <span>Merge/Shared Events</span>
+                </div>
+                <div class="legend-item">
+                    <svg width="45" height="20">
+                        <circle cx="10" cy="10" r="6" fill="#FF6B35" stroke="#333" stroke-width="2"/>
+                    </svg>
+                    <span>Individual Operations</span>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h4>Cargo Lines</h4>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: #E91E63;"></div>
+                    <span>SOF1/2: Kuala Tanjung</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: #9C27B0;"></div>
+                    <span>SOF3: Kandla</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: linear-gradient(90deg, #FF6B35, #F7931E, #FFCB05, #00B04F, #0019A8);"></div>
+                    <span>SOF4-8: Port Qasim</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <div class="voyage-flow">
+                <div class="flow-item">
+                    <span class="flow-port">🇮🇩 Kuala Tanjung</span>
+                    <span class="flow-arrow-icon">→</span>
+                    <span class="flow-port">🇮🇳 Kandla</span>
+                    <span class="flow-arrow-icon">→</span>
+                    <span class="flow-port">🇵🇰 Port Qasim</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <!-- Time blocks background layer -->
+            <div class="time-blocks-layer">
+                <!-- Kuala Tanjung time blocks -->
+                <div class="time-block waiting" style="top: 100px; height: 160px;">
+                    <div class="time-block-label">Waiting</div>
+                </div>
+                <div class="time-block laytime" style="top: 260px; height: 440px;">
+                    <div class="time-block-label">Laytime</div>
+                </div>
+                
+                <!-- Kandla time blocks -->
+                <div class="time-block waiting" style="top: 1180px; height: 160px;">
+                    <div class="time-block-label">Waiting</div>
+                </div>
+                <div class="time-block laytime" style="top: 1340px; height: 180px;">
+                    <div class="time-block-label">Laytime</div>
+                </div>
+                <div class="time-block deduction" style="top: 1380px; height: 40px;">
+                    <div class="time-block-label">Shifting</div>
+                </div>
+                <div class="time-block laytime" style="top: 1420px; height: 320px;">
+                    <div class="time-block-label">Laytime</div>
+                </div>
+                
+                <!-- Port Qasim time blocks -->
+                <div class="time-block waiting" style="top: 2260px; height: 160px;">
+                    <div class="time-block-label">Waiting</div>
+                </div>
+                <div class="time-block laytime" style="top: 2420px; height: 120px;">
+                    <div class="time-block-label">Laytime</div>
+                </div>
+                <div class="time-block deduction" style="top: 2540px; height: 120px;">
+                    <div class="time-block-label">Shifting</div>
+                </div>
+                <div class="time-block laytime" style="top: 2660px; height: 760px;">
+                    <div class="time-block-label">Active Ops</div>
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <!-- Kuala Tanjung Timeline -->
+                <div class="time-marker" style="top: 0px;">26 Apr 09:30</div>
+                <div class="time-marker" style="top: 80px;">26 Apr 13:35</div>
+                <div class="time-marker" style="top: 160px;">26 Apr 16:45</div>
+                <div class="time-marker" style="top: 280px;">26 Apr 22:45</div>
+                <div class="time-marker" style="top: 400px;">27 Apr 01:30</div>
+                <div class="time-marker" style="top: 480px;">27 Apr 22:45</div>
+                <div class="time-marker" style="top: 600px;">28 Apr 19:00</div>
+                
+                <!-- Kandla Timeline -->
+                <div class="time-marker" style="top: 1080px;">06 May 01:20</div>
+                <div class="time-marker" style="top: 1160px;">06 May 09:20</div>
+                <div class="time-marker" style="top: 1240px;">06 May 15:20</div>
+                <div class="time-marker" style="top: 1320px;">10 May 00:50</div>
+                <div class="time-marker" style="top: 1400px;">10 May 05:05</div>
+                <div class="time-marker" style="top: 1480px;">10 May 07:40</div>
+                <div class="time-marker" style="top: 1640px;">11 May 05:50</div>
+                
+                <!-- Port Qasim Timeline -->
+                <div class="time-marker" style="top: 2160px;">12 May 03:30</div>
+                <div class="time-marker" style="top: 2240px;">12 May 05:45</div>
+                <div class="time-marker" style="top: 2320px;">12 May 11:45</div>
+                <div class="time-marker" style="top: 2440px;">16 May 12:30</div>
+                <div class="time-marker" style="top: 2560px;">16 May 17:10</div>
+                <div class="time-marker" style="top: 2680px;">16 May 19:15</div>
+                <div class="time-marker" style="top: 2800px;">17 May 03:25</div>
+                <div class="time-marker" style="top: 2920px;">17 May 12:45</div>
+                <div class="time-marker" style="top: 3040px;">17 May 16:45</div>
+                <div class="time-marker" style="top: 3160px;">17 May 21:15</div>
+                <div class="time-marker" style="top: 3280px;">17 May 22:35</div>
+                <div class="time-marker" style="top: 3400px;">18 May 16:45</div>
+            </div>
+            
+            <!-- Port Labels -->
+            <div class="port-label kuala-tanjung" style="top: 100px;">Kuala Tanjung</div>
+            <div class="port-label kandla" style="top: 1180px;">Kandla</div>
+            <div class="port-label port-qasim" style="top: 2260px;">Port Qasim</div>
+            
+            <!-- Port Separators -->
+            <div class="port-separator" style="top: 880px;">
+                <div class="transit-info">
+                    <div>Sea Transit: Kuala Tanjung → Kandla</div>
+                    <div class="transit-duration">7 days 15 hours 50 minutes</div>
+                </div>
+            </div>
+            
+            <div class="port-separator" style="top: 1960px;">
+                <div class="transit-info">
+                    <div>Sea Transit: Kandla → Port Qasim</div>
+                    <div class="transit-duration">16 hours 10 minutes</div>
+                </div>
+            </div>
+            
+            <svg id="tubeMap" viewBox="0 0 1600 4800">
+                <defs>
+                    <!-- Arrow markers for flow indication -->
+                    <marker id="flowArrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#666" opacity="0.4"/>
+                    </marker>
+                    
+                    <!-- Gradients for visual effects -->
+                    <linearGradient id="mergeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#6B7280;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#4B5563;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <filter id="stationGlow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" id="toggleFlow">Show Event Flow</button>
+            <button class="control-btn" id="highlightSimultaneous">Highlight Simultaneous Ops</button>
+            <button class="control-btn" id="showTimeBlocks">Toggle Time Blocks</button>
+            <button class="control-btn" id="focusLaytime">Focus Laytime</button>
+            <button class="control-btn" id="focusWaiting">Focus Waiting</button>
+            <button class="control-btn" id="focusDeductions">Focus Deductions</button>
+            <button class="control-btn" id="resetView">Reset View</button>
+        </div>
+    </div>
+    
+    <script>
+        // Enhanced cargo line definitions with event types
+        const cargoLines = {
+            // Kuala Tanjung
+            '7W': { name: 'Fatty Acid', color: '#E91E63', charterer: 'UNILEVER', port: 'KT', x: 400, sof: 'SOF1' },
+            '6P': { name: 'Stearin', color: '#F06292', charterer: 'UNILEVER', port: 'KT', x: 550, sof: 'SOF2' },
+            // Kandla
+            '7W_D': { name: 'Fatty Acid', color: '#9C27B0', charterer: 'UNILEVER', port: 'KDL', x: 700, sof: 'SOF3' },
+            // Port Qasim
+            '8W': { name: 'Palm Olein', color: '#FF6B35', charterer: 'OTHER', port: 'PQM', x: 300, sof: 'SOF4' },
+            '9W': { name: 'Palm Oil', color: '#F7931E', charterer: 'OTHER', port: 'PQM', x: 450, sof: 'SOF5' },
+            '4S': { name: 'Palm Stearin 4S', color: '#FFCB05', charterer: 'OTHER', port: 'PQM', x: 600, sof: 'SOF6' },
+            '6S': { name: 'Soft Stearin 6S', color: '#00B04F', charterer: 'OTHER', port: 'PQM', x: 750, sof: 'SOF7' },
+            '5S,6P': { name: 'Palm Stearin 5S,6P', color: '#0019A8', charterer: 'UNILEVER', port: 'PQM', x: 900, sof: 'SOF8' }
+        };
+        
+        // Enhanced timeline with event types and flow information
+        const timeline = [
+            // KUALA TANJUNG
+            {
+                id: 'kt_arrival',
+                time: '26 Apr 09:30',
+                station: 'Arrival (EOSP)',
+                description: 'Vessel arrives at port',
+                cargoes: ['7W', '6P'],
+                routeType: 'merge',
+                eventType: 'waiting',
+                port: 'KT',
+                y: 100
+            },
+            {
+                id: 'kt_nor',
+                time: '26 Apr 13:35',
+                station: 'NOR Tendered',
+                description: 'Notice of Readiness submitted',
+                cargoes: ['7W', '6P'],
+                routeType: 'merge',
+                eventType: 'waiting',
+                port: 'KT',
+                y: 180
+            },
+            {
+                id: 'kt_berth',
+                time: '26 Apr 16:45',
+                station: 'Made Fast / Laytime Start',
+                description: 'Berthed - Laytime commences',
+                cargoes: ['7W', '6P'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 260
+            },
+            {
+                id: 'kt_branch',
+                station: 'Operations Branch',
+                description: 'Cargo operations diverge',
+                cargoes: ['7W', '6P'],
+                routeType: 'branch',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 320
+            },
+            {
+                id: 'kt_sof1_start',
+                time: '26 Apr 22:45',
+                station: 'SOF1 Loading Start',
+                description: 'Fatty Acid hose connected',
+                cargoes: ['7W'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 380
+            },
+            {
+                id: 'kt_sof2_start',
+                time: '27 Apr 22:45',
+                station: 'SOF2 Loading Start',
+                description: 'Stearin hose connected',
+                cargoes: ['6P'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 460
+            },
+            {
+                id: 'kt_sof1_complete',
+                time: '28 Apr 04:39',
+                station: 'SOF1 Complete',
+                description: 'Fatty Acid loading finished',
+                cargoes: ['7W'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 520
+            },
+            {
+                id: 'kt_sof2_complete',
+                time: '28 Apr 16:31',
+                station: 'SOF2 Complete',
+                description: 'Stearin loading finished',
+                cargoes: ['6P'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 580
+            },
+            {
+                id: 'kt_merge',
+                station: 'Operations Merge',
+                description: 'All cargo complete',
+                cargoes: ['7W', '6P'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 640
+            },
+            {
+                id: 'kt_departure',
+                time: '28 Apr 19:00',
+                station: 'Departure',
+                description: 'Sailed from Kuala Tanjung',
+                cargoes: ['7W', '6P'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'KT',
+                y: 700
+            },
+            
+            // KANDLA
+            {
+                id: 'kdl_arrival',
+                time: '06 May 01:20',
+                station: 'Arrival (EOSP)',
+                description: 'Vessel arrives at Kandla',
+                cargoes: ['7W_D'],
+                routeType: 'merge',
+                eventType: 'waiting',
+                port: 'KDL',
+                y: 1180
+            },
+            {
+                id: 'kdl_nor',
+                time: '06 May 09:20',
+                station: 'NOR Tendered',
+                description: 'Notice of Readiness',
+                cargoes: ['7W_D'],
+                routeType: 'merge',
+                eventType: 'waiting',
+                port: 'KDL',
+                y: 1260
+            },
+            {
+                id: 'kdl_laytime',
+                time: '06 May 15:20',
+                station: 'Laytime Commenced',
+                description: 'NOR + 6 hours',
+                cargoes: ['7W_D'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'KDL',
+                y: 1340
+            },
+            {
+                id: 'kdl_shifting',
+                time: '10 May 00:50',
+                station: 'Shifting Start',
+                description: 'Moving to berth (Deduction)',
+                cargoes: ['7W_D'],
+                routeType: 'merge',
+                eventType: 'deduction',
+                port: 'KDL',
+                y: 1380
+            },
+            {
+                id: 'kdl_berth',
+                time: '10 May 05:05',
+                station: 'Made Fast',
+                description: 'Berthed at OJ-4',
+                cargoes: ['7W_D'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'KDL',
+                y: 1420
+            },
+            {
+                id: 'kdl_sof3_start',
+                time: '10 May 07:40',
+                station: 'Discharge Start',
+                description: 'Fatty Acid discharge begins',
+                cargoes: ['7W_D'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'KDL',
+                y: 1500
+            },
+            {
+                id: 'kdl_sof3_complete',
+                time: '11 May 05:15',
+                station: 'Discharge Complete',
+                description: 'All cargo discharged',
+                cargoes: ['7W_D'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'KDL',
+                y: 1620
+            },
+            {
+                id: 'kdl_departure',
+                time: '11 May 05:50',
+                station: 'Departure',
+                description: 'Sailed from Kandla',
+                cargoes: ['7W_D'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'KDL',
+                y: 1700
+            },
+            
+            // PORT QASIM
+            {
+                id: 'pqm_arrival',
+                time: '12 May 03:30',
+                station: 'Arrival (EOSP)',
+                description: 'Vessel arrives at Port Qasim',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'waiting',
+                port: 'PQM',
+                y: 2260
+            },
+            {
+                id: 'pqm_nor',
+                time: '12 May 05:45',
+                station: 'NOR Tendered',
+                description: 'Notice of Readiness & Anchor',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'waiting',
+                port: 'PQM',
+                y: 2340
+            },
+            {
+                id: 'pqm_laytime',
+                time: '12 May 11:45',
+                station: 'Laytime Commenced',
+                description: '6 hours after NOR',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 2420
+            },
+            {
+                id: 'pqm_anchorage_wait',
+                station: 'Anchorage Wait',
+                description: 'Waiting for berth (4d 6h)',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'waiting',
+                port: 'PQM',
+                y: 2480
+            },
+            {
+                id: 'pqm_shifting',
+                time: '16 May 12:30',
+                station: 'Shifting to Berth',
+                description: 'Moving to berth (Deduction)',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'deduction',
+                port: 'PQM',
+                y: 2540
+            },
+            {
+                id: 'pqm_berth',
+                time: '16 May 17:10',
+                station: 'Made Fast at Berth',
+                description: 'All fast alongside LCT',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 2620
+            },
+            {
+                id: 'pqm_branch',
+                station: 'Operations Branch',
+                description: 'Sequential discharge ops begin',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'branch',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 2680
+            },
+            {
+                id: 'pqm_sof4_start',
+                time: '16 May 19:15',
+                station: 'SOF4 Discharge',
+                description: 'Palm Olein - 8h 10m',
+                cargoes: ['8W'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 2760,
+                simultaneous: ['9W_wait', '4S_wait', '6S_wait', '5S,6P_wait']
+            },
+            {
+                id: 'pqm_sof5_start',
+                time: '17 May 03:25',
+                station: 'SOF5 Discharge',
+                description: 'Palm Oil - 13h 20m',
+                cargoes: ['9W'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 2880,
+                simultaneous: ['5S,6P_partial', '4S_wait']
+            },
+            {
+                id: 'pqm_sof8_start',
+                time: '17 May 12:45',
+                station: 'SOF8 Discharge',
+                description: 'UNILEVER - 9h 40m',
+                cargoes: ['5S,6P'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 2960,
+                simultaneous: ['9W_active', '4S_active']
+            },
+            {
+                id: 'pqm_sof6_start',
+                time: '17 May 16:45',
+                station: 'SOF6 Discharge',
+                description: 'Palm Stearin 4S - 4h 30m',
+                cargoes: ['4S'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 3040,
+                simultaneous: ['5S,6P_active']
+            },
+            {
+                id: 'pqm_sof7_start',
+                time: '17 May 21:15',
+                station: 'SOF7 Discharge',
+                description: 'Soft Stearin 6S - 1h 20m',
+                cargoes: ['6S'],
+                routeType: 'individual',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 3120
+            },
+            {
+                id: 'pqm_merge',
+                station: 'Operations Merge',
+                description: 'All discharge complete',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 3200
+            },
+            {
+                id: 'pqm_complete',
+                time: '17 May 22:35',
+                station: 'All Cargo Complete',
+                description: 'Operations finished',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'laytime',
+                port: 'PQM',
+                y: 3280
+            },
+            {
+                id: 'pqm_departure',
+                time: '18 May 16:45',
+                station: 'Departure (COSP)',
+                description: 'Vessel sailed',
+                cargoes: ['8W', '9W', '4S', '6S', '5S,6P'],
+                routeType: 'merge',
+                eventType: 'post-ops',
+                port: 'PQM',
+                y: 3400
+            }
+        ];
+        
+        // Draw the enhanced tube map
+        function drawTubeMap() {
+            const svg = document.getElementById('tubeMap');
+            
+            // Draw operation groups for simultaneous events
+            drawOperationGroups(svg);
+            
+            // Draw stations first (so lines appear on top)
+            timeline.forEach((event) => {
+                drawStation(svg, event);
+            });
+            
+            // Draw cargo lines on top of stations
+            Object.entries(cargoLines).forEach(([id, cargo]) => {
+                drawCargoLine(svg, id, cargo);
+            });
+            
+            // Draw flow arrows
+            drawFlowArrows(svg);
+            
+            // Draw branch indicators
+            drawBranchIndicators(svg);
+            
+            // Draw simultaneous operation indicators
+            drawSimultaneousIndicators(svg);
+        }
+        
+        function drawCargoLine(svg, id, cargo) {
+            const events = timeline.filter(e => e.cargoes.includes(id));
+            if (events.length === 0) return;
+            
+            let path = `M ${cargo.x} 0`;
+            let lastY = 0;
+            let lastX = cargo.x;
+            
+            events.forEach((event, i) => {
+                let targetX = cargo.x;
+                
+                // Calculate position based on route type
+                if (event.routeType === 'merge' || event.routeType === 'branch') {
+                    // Lines run parallel in a bundle
+                    const activeCargoes = event.cargoes;
+                    const cargoIndex = activeCargoes.indexOf(id);
+                    const totalCargoes = activeCargoes.length;
+                    
+                    // Calculate bundled position
+                    let bundleCenter;
+                    if (event.port === 'PQM') {
+                        bundleCenter = 600;
+                    } else if (event.port === 'KT') {
+                        bundleCenter = 475;
+                    } else {
+                        bundleCenter = 700;
+                    }
+                    
+                    // Space lines closely together (12px apart)
+                    const spacing = 12;
+                    const bundleWidth = (totalCargoes - 1) * spacing;
+                    targetX = bundleCenter - bundleWidth / 2 + cargoIndex * spacing;
+                    
+                } else if (event.routeType === 'individual') {
+                    // Branch out to individual position
+                    targetX = cargo.x;
+                }
+                
+                // Create smooth curves for transitions
+                if (Math.abs(targetX - lastX) > 50) {
+                    // Major transition - use smooth curve
+                    const controlY = lastY + (event.y - lastY) * 0.3;
+                    path += ` Q ${lastX} ${controlY}, ${targetX} ${event.y}`;
+                } else if (targetX !== lastX) {
+                    // Minor adjustment - gentle curve
+                    path += ` L ${targetX} ${event.y}`;
+                } else {
+                    // Straight line
+                    path += ` L ${targetX} ${event.y}`;
+                }
+                
+                lastX = targetX;
+                lastY = event.y;
+            });
+            
+            // Complete the line
+            path += ` L ${lastX} 4800`;
+            
+            // Create line element with event type styling
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            line.setAttribute('d', path);
+            line.setAttribute('class', 'cargo-line');
+            line.setAttribute('stroke', cargo.color);
+            line.setAttribute('id', `line-${id}`);
+            line.setAttribute('data-port', cargo.port);
+            svg.appendChild(line);
+        }
+        
+        function drawStation(svg, event) {
+            if (event.routeType === 'merge' || event.routeType === 'branch') {
+                // For shared stations, draw a single station that the parallel lines pass through
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'station');
+                g.setAttribute('data-event', event.id);
+                g.setAttribute('data-port', event.port);
+                g.setAttribute('data-type', event.eventType);
+                
+                let centerX;
+                if (event.port === 'PQM') centerX = 600;
+                else if (event.port === 'KT') centerX = 475;
+                else centerX = 700;
+                
+                const size = 24;
+                const fillColor = 'url(#mergeGradient)';
+                
+                // White background bar for parallel lines to pass through
+                const bgBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                const barWidth = event.cargoes.length * 12 + 40;
+                bgBar.setAttribute('x', centerX - barWidth / 2);
+                bgBar.setAttribute('y', event.y - size - 4);
+                bgBar.setAttribute('width', barWidth);
+                bgBar.setAttribute('height', (size + 4) * 2);
+                bgBar.setAttribute('fill', 'white');
+                bgBar.setAttribute('rx', size + 4);
+                bgBar.setAttribute('stroke', '#333');
+                bgBar.setAttribute('stroke-width', '3');
+                g.appendChild(bgBar);
+                
+                // Central station circle
+                const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                outer.setAttribute('cx', centerX);
+                outer.setAttribute('cy', event.y);
+                outer.setAttribute('r', size + 4);
+                outer.setAttribute('class', 'station-outer');
+                outer.setAttribute('filter', 'url(#stationGlow)');
+                g.appendChild(outer);
+                
+                const inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                inner.setAttribute('cx', centerX);
+                inner.setAttribute('cy', event.y);
+                inner.setAttribute('r', size);
+                inner.setAttribute('class', 'station-inner');
+                inner.setAttribute('fill', fillColor);
+                g.appendChild(inner);
+                
+                // Highlight ring
+                const highlight = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                highlight.setAttribute('cx', centerX);
+                highlight.setAttribute('cy', event.y);
+                highlight.setAttribute('r', size + 10);
+                highlight.setAttribute('class', 'highlight-ring');
+                g.appendChild(highlight);
+                
+                // Add label
+                const label = createLabel(centerX + barWidth / 2 + 20, event.y, event.station, event.description);
+                g.appendChild(label);
+                
+                svg.appendChild(g);
+                
+            } else {
+                // Individual stations
+                event.cargoes.forEach(cargoId => {
+                    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                    g.setAttribute('class', 'station');
+                    g.setAttribute('data-event', event.id);
+                    g.setAttribute('data-port', event.port);
+                    g.setAttribute('data-type', event.eventType);
+                    
+                    const x = cargoLines[cargoId].x;
+                    const size = 14;
+                    const fillColor = cargoLines[cargoId].color;
+                    
+                    // Outer circle
+                    const outer = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    outer.setAttribute('cx', x);
+                    outer.setAttribute('cy', event.y);
+                    outer.setAttribute('r', size + 4);
+                    outer.setAttribute('class', 'station-outer');
+                    outer.setAttribute('filter', 'url(#stationGlow)');
+                    g.appendChild(outer);
+                    
+                    // Inner circle
+                    const inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    inner.setAttribute('cx', x);
+                    inner.setAttribute('cy', event.y);
+                    inner.setAttribute('r', size);
+                    inner.setAttribute('class', 'station-inner');
+                    inner.setAttribute('fill', fillColor);
+                    g.appendChild(inner);
+                    
+                    // Highlight ring
+                    const highlight = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    highlight.setAttribute('cx', x);
+                    highlight.setAttribute('cy', event.y);
+                    highlight.setAttribute('r', size + 10);
+                    highlight.setAttribute('class', 'highlight-ring');
+                    g.appendChild(highlight);
+                    
+                    // Add label
+                    const label = createLabel(x + size + 20, event.y, event.station, event.description);
+                    g.appendChild(label);
+                    
+                    svg.appendChild(g);
+                });
+            }
+        }
+        
+        function createLabel(x, y, title, desc) {
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            
+            const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            titleText.setAttribute('x', x);
+            titleText.setAttribute('y', y - 5);
+            titleText.setAttribute('class', 'station-label');
+            titleText.textContent = title;
+            g.appendChild(titleText);
+            
+            if (desc) {
+                const descText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                descText.setAttribute('x', x);
+                descText.setAttribute('y', y + 12);
+                descText.setAttribute('class', 'station-desc');
+                descText.textContent = desc;
+                g.appendChild(descText);
+            }
+            
+            return g;
+        }
+        
+        function drawOperationGroups(svg) {
+            // Group simultaneous operations at Port Qasim
+            const simultaneousGroups = [
+                { y: 2740, height: 180, label: 'Sequential Start' },
+                { y: 2880, height: 200, label: 'Concurrent Ops' }
+            ];
+            
+            simultaneousGroups.forEach(group => {
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', 250);
+                rect.setAttribute('y', group.y);
+                rect.setAttribute('width', 700);
+                rect.setAttribute('height', group.height);
+                rect.setAttribute('class', 'operation-group');
+                svg.appendChild(rect);
+            });
+        }
+        
+        function drawFlowArrows(svg) {
+            // Add flow direction indicators
+            timeline.forEach((event, i) => {
+                if (i < timeline.length - 1 && event.routeType === 'merge') {
+                    const nextEvent = timeline[i + 1];
+                    if (nextEvent.port === event.port) {
+                        let x = 600;
+                        if (event.port === 'KT') x = 475;
+                        else if (event.port === 'KDL') x = 700;
+                        
+                        const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        arrow.setAttribute('x1', x);
+                        arrow.setAttribute('y1', event.y + 25);
+                        arrow.setAttribute('x2', x);
+                        arrow.setAttribute('y2', nextEvent.y - 25);
+                        arrow.setAttribute('class', 'flow-arrow');
+                        arrow.setAttribute('stroke', '#666');
+                        arrow.setAttribute('marker-end', 'url(#flowArrow)');
+                        svg.appendChild(arrow);
+                    }
+                }
+            });
+        }
+        
+        function drawBranchIndicators(svg) {
+            // Add visual indicators for branching points
+            timeline.filter(e => e.routeType === 'branch').forEach(event => {
+                let centerX = 600;
+                if (event.port === 'KT') centerX = 475;
+                else if (event.port === 'KDL') centerX = 700;
+                
+                const indicator = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                indicator.setAttribute('cx', centerX);
+                indicator.setAttribute('cy', event.y);
+                indicator.setAttribute('r', 40);
+                indicator.setAttribute('class', 'branch-indicator');
+                svg.appendChild(indicator);
+            });
+        }
+        
+        function drawSimultaneousIndicators(svg) {
+            // Add labels for simultaneous operations
+            const simultaneousEvents = timeline.filter(e => e.simultaneous);
+            
+            simultaneousEvents.forEach(event => {
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', 1050);
+                text.setAttribute('y', event.y);
+                text.setAttribute('class', 'simultaneous-indicator');
+                text.textContent = 'SIMULTANEOUS';
+                svg.appendChild(text);
+            });
+        }
+        
+        // Initialize the map
+        drawTubeMap();
+        
+        // Control handlers
+        document.getElementById('toggleFlow').addEventListener('click', function() {
+            const arrows = document.querySelectorAll('.flow-arrow');
+            arrows.forEach(arrow => {
+                arrow.style.opacity = arrow.style.opacity === '0' ? '0.4' : '0';
+            });
+            this.classList.toggle('active');
+        });
+        
+        document.getElementById('highlightSimultaneous').addEventListener('click', function() {
+            const groups = document.querySelectorAll('.operation-group');
+            groups.forEach(group => {
+                group.style.opacity = group.style.opacity === '0' ? '0.5' : '0';
+            });
+            
+            const indicators = document.querySelectorAll('.simultaneous-indicator');
+            indicators.forEach(ind => {
+                ind.style.display = ind.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            this.classList.toggle('active');
+        });
+        
+        document.getElementById('showTimeBlocks').addEventListener('click', function() {
+            const blocks = document.querySelector('.time-blocks-layer');
+            blocks.style.display = blocks.style.display === 'none' ? 'block' : 'none';
+            this.classList.toggle('active');
+        });
+        
+        document.getElementById('focusLaytime').addEventListener('click', function() {
+            focusEventType('laytime');
+            this.classList.add('active');
+            document.getElementById('focusWaiting').classList.remove('active');
+            document.getElementById('focusDeductions').classList.remove('active');
+        });
+        
+        document.getElementById('focusWaiting').addEventListener('click', function() {
+            focusEventType('waiting');
+            this.classList.add('active');
+            document.getElementById('focusLaytime').classList.remove('active');
+            document.getElementById('focusDeductions').classList.remove('active');
+        });
+        
+        document.getElementById('focusDeductions').addEventListener('click', function() {
+            focusEventType('deduction');
+            this.classList.add('active');
+            document.getElementById('focusLaytime').classList.remove('active');
+            document.getElementById('focusWaiting').classList.remove('active');
+        });
+        
+        function focusEventType(type) {
+            document.querySelectorAll('.station').forEach(station => {
+                if (station.dataset.type === type) {
+                    station.style.opacity = '1';
+                    station.querySelector('.highlight-ring').classList.add('active');
+                } else {
+                    station.style.opacity = '0.3';
+                    station.querySelector('.highlight-ring').classList.remove('active');
+                }
+            });
+            
+            document.querySelectorAll('.time-block').forEach(block => {
+                if (block.classList.contains(type)) {
+                    block.style.opacity = '0.3';
+                } else {
+                    block.style.opacity = '0.05';
+                }
+            });
+        }
+        
+        document.getElementById('resetView').addEventListener('click', function() {
+            document.querySelectorAll('.station').forEach(station => {
+                station.style.opacity = '1';
+                station.querySelector('.highlight-ring').classList.remove('active');
+            });
+            
+            document.querySelectorAll('.time-block').forEach(block => {
+                block.style.opacity = '0.15';
+            });
+            
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelector('.time-blocks-layer').style.display = 'block';
+            document.getElementById('showTimeBlocks').classList.add('active');
+        });
+        
+        // Add interactive hover effects
+        document.querySelectorAll('.station').forEach(station => {
+            station.addEventListener('mouseenter', function() {
+                const ring = this.querySelector('.highlight-ring');
+                if (!ring.classList.contains('active')) {
+                    ring.style.opacity = '0.3';
+                }
+            });
+            
+            station.addEventListener('mouseleave', function() {
+                const ring = this.querySelector('.highlight-ring');
+                if (!ring.classList.contains('active')) {
+                    ring.style.opacity = '0';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

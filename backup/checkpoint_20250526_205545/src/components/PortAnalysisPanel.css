@@ -1,0 +1,522 @@
+/* Port Analysis Panel Styles */
+.port-analysis-panel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 10px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* No port selected state */
+.no-port-selected {
+  text-align: center;
+  padding: 20px;
+  color: #6c757d;
+}
+
+.no-port-selected p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.no-port-selected .hint {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Panel Header */
+.panel-header {
+  background: #f5f5f5;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+.sync-icon {
+  font-size: 14px;
+}
+
+.sync-icon.active {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Current Port Display */
+.current-port-display {
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 1px solid #dee2e6;
+}
+
+.current-port-display h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #374151;
+}
+
+.port-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.port-meta .country {
+  font-weight: 500;
+}
+
+.port-meta .berth {
+  color: #495057;
+}
+
+/* Panel Sections */
+.panel-section {
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.panel-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-header {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fafafa;
+  transition: background 0.2s;
+}
+
+.section-header:hover {
+  background: #f5f5f5;
+}
+
+.section-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-icon {
+  font-size: 16px;
+}
+
+.toggle-icon {
+  font-size: 18px;
+  color: #666;
+  font-weight: 300;
+}
+
+.section-content {
+  padding: 0 20px 20px;
+  animation: slideDown 0.3s ease;
+}
+
+.panel-section.collapsed .section-content {
+  display: none;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Overview Grid */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.overview-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.overview-item .label {
+  font-size: 12px;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.overview-item .value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Time Analysis */
+.time-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.time-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+.time-item.waiting {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+}
+
+.time-item.laytime {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+}
+
+.time-item.deduction {
+  background: #f8d7da;
+  border-left: 4px solid #dc3545;
+}
+
+.time-item.non-unilever {
+  background: #e2e3e5;
+  border-left: 4px solid #6c757d;
+}
+
+.time-label {
+  font-size: 13px;
+  color: #495057;
+}
+
+.time-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #212529;
+}
+
+/* Laytime Calculation */
+.laytime-calc {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.laytime-calc h5 {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calc-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 13px;
+}
+
+.calc-item span:first-child {
+  color: #6c757d;
+}
+
+.calc-item span:last-child {
+  font-weight: 500;
+  color: #212529;
+}
+
+/* Cargo Operations */
+.cargo-group {
+  margin-bottom: 20px;
+}
+
+.cargo-group:last-child {
+  margin-bottom: 0;
+}
+
+.cargo-group-title {
+  margin: 15px 0 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.cargo-group-title.unilever {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.cargo-group-title.other {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.cargo-item {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.cargo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cargo-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.cargo-tanks {
+  font-size: 12px;
+  color: #6c757d;
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.cargo-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.cargo-quantity {
+  color: #495057;
+}
+
+.cargo-operation {
+  font-weight: 500;
+  color: #28a745;
+}
+
+/* Proration Analysis */
+.proration-info {
+  margin-top: 15px;
+}
+
+.proration-explanation {
+  font-size: 13px;
+  color: #495057;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.charterer-breakdown {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.charterer-item {
+  flex: 1;
+  padding: 15px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.charterer-item.unilever {
+  background: #e3f2fd;
+  border: 1px solid #90caf9;
+}
+
+.charterer-item.other {
+  background: #f3e5f5;
+  border: 1px solid #ce93d8;
+}
+
+.charterer-name {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.charterer-cargoes {
+  font-size: 12px;
+  color: #666;
+}
+
+.proration-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.note-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Transit Information */
+.transit-info {
+  padding: 15px 20px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #495057;
+  margin-top: auto;
+}
+
+.transit-icon {
+  font-size: 16px;
+}
+
+.transit-duration {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+/* Scrollbar styling */
+.port-analysis-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.port-analysis-panel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.port-analysis-panel::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.port-analysis-panel::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .charterer-breakdown {
+    flex-direction: column;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .port-analysis-panel {
+    background: #2d3748;
+    color: #e2e8f0;
+  }
+
+  .port-name {
+    background: #4a5568;
+  }
+
+  .port-name.active {
+    background: #4A90E2;
+  }
+
+  .cargo-split,
+  .calculation-breakdown,
+  .laytime-summary,
+  .validation-status {
+    background: #1a202c;
+    border-color: #4a5568;
+  }
+
+  .calculation-line .label,
+  .deduction-line .label,
+  .validation-item .text {
+    color: #a0aec0;
+  }
+
+  .multi-charterer-warning {
+    background: #744210;
+    color: #ffd93d;
+    border-color: #a16207;
+  }
+
+  .single-charterer-info {
+    background: #22543d;
+    color: #9ae6b4;
+    border-color: #2f855a;
+  }
+}
+
+/* Scroll update animation */
+.port-analysis-panel.scroll-update {
+  animation: highlightUpdate 0.5s ease;
+  border: 2px solid #4A90E2;
+}
+
+@keyframes highlightUpdate {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 25, 168, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+} 

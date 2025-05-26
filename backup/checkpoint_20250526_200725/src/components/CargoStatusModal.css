@@ -1,0 +1,1101 @@
+/* File: src/components/CargoStatusModal.css */
+/* Purpose: Styles for the combined vessel info and cargo status modal - Smart sticky behavior without content truncation */
+
+.cargo-status-modal {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 12px; /* Reduced from 16px */
+  padding: 12px 16px; /* Reduced from 20px 24px */
+  margin-bottom: 16px; /* Reduced from 24px */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* Lighter shadow */
+  border: 1px solid #E8E9ED;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 80px; /* Reduced from 120px */
+}
+
+/* Sticky positioning when scrolled - uses fixed positioning but maintains original dimensions */
+.cargo-status-modal.sticky {
+  position: fixed;
+  top: 0;
+  left: 16px; /* Match the main-layout padding */
+  right: 16px; /* Match the main-layout padding */
+  width: calc(100% - 32px); /* Account for left and right padding */
+  max-width: calc(100vw - 32px); /* Ensure it doesn't exceed viewport */
+  z-index: 1000; /* Higher than floating port modals (max 501) */
+  border-radius: 0 0 12px 12px; /* Reduced from 16px */
+  border: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12); /* Lighter shadow */
+  animation: slideDown 0.3s ease;
+}
+
+/* Add a placeholder to prevent content jump when modal becomes fixed */
+.cargo-status-modal-placeholder {
+  display: none;
+}
+
+.cargo-status-modal-placeholder.active {
+  display: block;
+  /* This should match the height of the cargo-status-modal */
+  height: var(--modal-height, 120px); /* Dynamic height set by JS */
+  margin-bottom: 16px; /* Match the modal's margin-bottom */
+}
+
+/* Responsive adjustments for sticky positioning */
+@media (max-width: 1024px) {
+  .cargo-status-modal.sticky {
+    left: 12px; /* Match reduced padding */
+    right: 12px;
+    width: calc(100% - 24px);
+    max-width: calc(100vw - 24px);
+  }
+}
+
+@media (max-width: 768px) {
+  .cargo-status-modal.sticky {
+    left: 10px; /* Match reduced padding */
+    right: 10px;
+    width: calc(100% - 20px);
+    max-width: calc(100vw - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .cargo-status-modal.sticky {
+    left: 8px; /* Minimal padding on mobile */
+    right: 8px;
+    width: calc(100% - 16px);
+    max-width: calc(100vw - 16px);
+    border-radius: 0 0 8px 8px; /* Smaller radius on mobile */
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Vessel header section - More compact */
+.vessel-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  gap: 12px; /* Reduced from 16px */
+}
+
+/* When sticky, constrain content width for readability */
+.cargo-status-modal.sticky .vessel-header-section {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vessel-info-left {
+  display: flex;
+  align-items: baseline;
+  gap: 12px; /* Reduced from 16px */
+}
+
+.vessel-title {
+  font-size: 18px; /* Reduced from 24px */
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+.vessel-route {
+  font-size: 12px; /* Reduced from 14px */
+  color: #6C7280;
+  font-weight: 500;
+}
+
+.route-label {
+  color: #374151;
+}
+
+/* Badge container - More compact */
+.vessel-badges {
+  display: flex;
+  gap: 8px; /* Reduced from 12px */
+  align-items: center;
+}
+
+.info-badge {
+  padding: 4px 10px; /* Reduced from 7px 14px */
+  border-radius: 14px; /* Reduced from 18px */
+  font-weight: 500;
+  font-size: 11px; /* Reduced from 14px */
+  color: white;
+  white-space: nowrap;
+}
+
+.voyage-badge {
+  background: #4A90E2;
+}
+
+.charterer-badge {
+  background: #E91E63;
+  font-weight: 600;
+}
+
+.duration-badge {
+  background: #10B981;
+}
+
+.ports-badge {
+  background: #EF4444;
+}
+
+.cargo-count-badge {
+  background: #3B82F6;
+}
+
+/* Cargo Section - Collapsible Container */
+.cargo-section {
+  margin-top: 12px; /* Reduced from 16px */
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px; /* Reduced from 12px */
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* When sticky, constrain cargo section width */
+.cargo-status-modal.sticky .cargo-section {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cargo-section-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px; /* Reduced from 12px 16px */
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background 0.2s ease;
+}
+
+.cargo-section-header:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.cargo-section-toggle {
+  font-size: 10px; /* Reduced from 12px */
+  color: #6C7280;
+  margin-right: 8px; /* Reduced from 12px */
+  transition: transform 0.2s ease;
+}
+
+.cargo-section-title {
+  font-size: 12px; /* Reduced from 14px */
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.5px;
+  flex-grow: 1;
+}
+
+.cargo-section-count {
+  font-size: 10px; /* Reduced from 12px */
+  font-weight: 500;
+  color: #6C7280;
+}
+
+/* Cargo Section Collapsed Summary */
+.cargo-section-summary {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Reduced from 8px */
+  font-size: 11px; /* Reduced from 13px */
+}
+
+.cargo-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cargo-summary-item.unilever {
+  color: #E91E63;
+  font-weight: 600;
+}
+
+.cargo-summary-item.other {
+  color: #6C7280;
+  font-weight: 500;
+}
+
+.cargo-summary-item.total {
+  color: #374151;
+  font-weight: 600;
+}
+
+.cargo-summary-item .cargo-count {
+  font-weight: 700;
+  font-size: 12px; /* Reduced from 14px */
+}
+
+.cargo-summary-divider {
+  color: #B8BBC3;
+  font-weight: 300;
+}
+
+/* Update cargo grid container to have padding when inside cargo section */
+.cargo-section .cargo-grid-container {
+  padding: 12px; /* Reduced from 16px */
+}
+
+/* Cargo grid - Single row with horizontal scrolling and full width utilization */
+.cargo-grid-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* When sticky, constrain content width for readability */
+.cargo-status-modal.sticky .cargo-grid-container {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cargo-grid {
+  display: flex;
+  gap: 8px; /* Reduced from 10px */
+  padding: 2px 0; /* Reduced from 4px 0 */
+  transition: transform 0.3s ease;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.cargo-grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Full width utilization - cards expand to fill available space */
+.cargo-grid.fit-to-width.full-width {
+  overflow-x: visible;
+  justify-content: stretch;
+}
+
+.cargo-grid.fit-to-width.full-width .cargo-item {
+  flex: 1;
+  min-width: 0;
+  max-width: none; /* Remove max-width constraint to allow full expansion */
+}
+
+/* When more than 12 items, use fixed width for scrolling */
+.cargo-grid.scrollable .cargo-item {
+  flex: 0 0 auto;
+  width: 140px; /* Reduced from 160px */
+}
+
+/* Compression Level Adjustments */
+
+/* Level 0: Full display (1200px+) */
+.compression-0 .cargo-grid.scrollable .cargo-item {
+  width: 160px; /* Reduced from 180px */
+}
+
+/* Level 1: Medium compression (1024px - 1199px) */
+.compression-1 .cargo-grid.scrollable .cargo-item {
+  width: 140px; /* Reduced from 160px */
+}
+
+/* Level 2: High compression (768px - 1023px) */
+.compression-2 .cargo-grid.scrollable .cargo-item {
+  width: 120px; /* Reduced from 140px */
+}
+
+.compression-2 .cargo-name {
+  font-size: 10px; /* Reduced from 11px */
+}
+
+.compression-2 .port-name {
+  font-size: 9px; /* Reduced from 10px */
+}
+
+/* Level 3: Maximum compression (below 768px) */
+.compression-3 .cargo-grid.scrollable .cargo-item {
+  width: 100px; /* Reduced from 120px */
+}
+
+.compression-3 .cargo-item {
+  padding: 6px 8px; /* Reduced padding */
+}
+
+.compression-3 .cargo-header {
+  margin-bottom: 4px; /* Reduced spacing */
+}
+
+.compression-3 .cargo-name {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.compression-3 .cargo-charterer {
+  font-size: 9px;
+}
+
+.compression-3 .cargo-quantity {
+  font-size: 9px;
+  margin-top: 2px;
+}
+
+.compression-3 .cargo-id {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Vessel header compression adjustments */
+.compression-2 .vessel-title {
+  font-size: 16px; /* Reduced from 18px */
+}
+
+.compression-2 .vessel-route {
+  font-size: 11px; /* Reduced from 12px */
+}
+
+.compression-3 .vessel-title {
+  font-size: 14px; /* Reduced from 16px */
+}
+
+.compression-3 .vessel-route {
+  font-size: 10px; /* Reduced from 11px */
+}
+
+.compression-3 .info-badge {
+  padding: 3px 6px; /* Reduced from 4px 8px */
+  font-size: 9px; /* Reduced from 10px */
+}
+
+.compression-3 .vessel-header-section {
+  padding: 10px 12px; /* Reduced from 12px 16px */
+}
+
+/* Scroll navigation buttons - more compact */
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 24px; /* Reduced from 32px */
+  height: 24px; /* Reduced from 32px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Lighter shadow */
+}
+
+.scroll-button:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.scroll-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.scroll-button.left {
+  left: -12px; /* Adjusted from -16px */
+}
+
+.scroll-button.right {
+  right: -12px; /* Adjusted from -16px */
+}
+
+.scroll-button svg {
+  width: 12px; /* Reduced from 16px */
+  height: 12px; /* Reduced from 16px */
+  fill: #374151;
+}
+
+/* Enhanced cargo pill design - More compact */
+.cargo-item {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px; /* Reduced from 12px */
+  padding: 8px 10px; /* Reduced from 10px 14px */
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cargo-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Unilever cargo highlighting */
+.cargo-item.unilever-cargo {
+  border-left: 3px solid #E91E63; /* Reduced from 4px */
+  background: rgba(233, 30, 99, 0.02);
+}
+
+.cargo-item.other-cargo {
+  border-left: 3px solid #9EA2AD; /* Reduced from 4px */
+  background: rgba(158, 162, 173, 0.02);
+}
+
+/* Port-prioritized cargo highlighting */
+.cargo-item.port-prioritized {
+  border-top: 3px solid #3B82F6; /* Reduced from 4px */
+  border-left: 3px solid #3B82F6; /* Reduced from 4px */
+  background: rgba(59, 130, 246, 0.15);
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.25); /* Lighter shadow */
+  transform: scale(1.02);
+  position: relative;
+}
+
+.cargo-item.port-prioritized::before {
+  content: "📍";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #3B82F6;
+  color: white;
+  border-radius: 50%;
+  width: 16px; /* Reduced from 20px */
+  height: 16px; /* Reduced from 20px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px; /* Reduced from 10px */
+  font-weight: bold;
+}
+
+.cargo-item.port-prioritized .cargo-id {
+  color: #2563EB;
+  font-weight: 800;
+}
+
+.cargo-header {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Reduced from 8px */
+  margin-bottom: 6px; /* Reduced from 8px */
+}
+
+.cargo-indicator {
+  width: 8px; /* Reduced from 10px */
+  height: 8px; /* Reduced from 10px */
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cargo-id {
+  font-weight: 700;
+  font-size: 12px; /* Reduced from 14px */
+  color: #374151;
+  flex-shrink: 0;
+}
+
+.cargo-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Reduced from 6px */
+  flex-grow: 1;
+}
+
+.cargo-charterer {
+  font-size: 9px; /* Reduced from 11px */
+  color: #6C7280;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  order: -1; /* Ensure it appears first in cargo-details */
+}
+
+.cargo-name {
+  font-weight: 600;
+  font-size: 11px; /* Reduced from 13px */
+  color: #374151;
+  line-height: 1.2;
+}
+
+.cargo-ports {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* Reduced from 3px */
+}
+
+.port-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.port-name {
+  font-size: 10px; /* Reduced from 11px */
+  color: #5a6c7d;
+  font-weight: 500;
+}
+
+.cargo-quantity {
+  font-size: 10px; /* Reduced from 11px */
+  color: #6C7280;
+  font-weight: 600;
+  margin-top: 2px; /* Reduced from 4px */
+}
+
+/* Status-based styling */
+.cargo-item.on-board {
+  border-right: 3px solid #27ae60;
+}
+
+.cargo-item.loading {
+  border-right: 3px solid #f39c12;
+  background: rgba(243, 156, 18, 0.05);
+}
+
+.cargo-item.discharging {
+  border-right: 3px solid #e74c3c;
+  background: rgba(231, 76, 60, 0.05);
+}
+
+.cargo-item.completed {
+  border-right: 3px solid #95a5a6;
+  background: rgba(149, 165, 166, 0.05);
+  opacity: 0.7;
+}
+
+/* Responsive design updates - Better space utilization */
+@media (max-width: 1400px) {
+  .cargo-grid.scrollable .cargo-item {
+    width: 150px; /* Slightly smaller but still spacious */
+  }
+}
+
+@media (max-width: 1200px) {
+  .cargo-grid.scrollable .cargo-item {
+    width: 140px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .cargo-grid.scrollable .cargo-item {
+    width: 130px;
+  }
+}
+
+@media (max-width: 900px) {
+  .cargo-grid.scrollable .cargo-item {
+    width: 120px;
+  }
+  
+  .vessel-header-section {
+    gap: 12px;
+  }
+  
+  .vessel-badges {
+    gap: 8px;
+  }
+  
+  .info-badge {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cargo-grid.scrollable .cargo-item {
+    width: 110px;
+  }
+  
+  .scroll-button {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .scroll-button svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .cargo-status-modal {
+    padding: 16px 18px;
+  }
+  
+  .vessel-title {
+    font-size: 20px;
+  }
+  
+  .vessel-header-section {
+    gap: 8px;
+  }
+  
+  .vessel-badges {
+    gap: 6px;
+  }
+  
+  .info-badge {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  
+  .cargo-item {
+    padding: 8px 10px;
+  }
+}
+
+/* Only apply column-specific styles on very small screens (iPhone size) */
+@media (max-width: 640px) {
+  .cargo-grid.scrollable .cargo-item {
+    width: 100px;
+  }
+  
+  .vessel-header-section {
+    flex-wrap: wrap;
+  }
+  
+  .vessel-info-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .vessel-badges {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+/* Voyage Summary Bar Styles */
+.voyage-summary-bar {
+  margin-top: 12px; /* Reduced from 16px */
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px; /* Reduced from 12px */
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* When sticky, constrain voyage summary width */
+.cargo-status-modal.sticky .voyage-summary-bar {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.voyage-summary-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px; /* Reduced from 12px 16px */
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background 0.2s ease;
+}
+
+.voyage-summary-header:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.voyage-summary-toggle {
+  font-size: 10px; /* Reduced from 12px */
+  color: #6C7280;
+  margin-right: 8px; /* Reduced from 12px */
+  transition: transform 0.2s ease;
+}
+
+.voyage-summary-title {
+  font-size: 12px; /* Reduced from 14px */
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.5px;
+  flex-grow: 1;
+}
+
+.voyage-summary-status {
+  font-size: 10px; /* Reduced from 12px */
+  font-weight: 600;
+  padding: 3px 8px; /* Reduced from 4px 12px */
+  border-radius: 10px; /* Reduced from 12px */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.voyage-summary-status.demurrage {
+  background: #E8F5E9; /* Light green background */
+  color: #1E8449; /* Darker green text */
+  border: 1px solid #A9DFBF; /* Light green border */
+  font-weight: 500; /* Adjusted font-weight for better visibility with light colors */
+}
+
+.voyage-summary-status.within-laytime {
+  background: #E8F5E9; /* Light green background */
+  color: #1E8449; /* Darker green text */
+  border: 1px solid #A9DFBF; /* Light green border */
+  font-weight: 500; /* Adjusted font-weight */
+}
+
+.voyage-summary-content {
+  padding: 12px; /* Reduced from 20px */
+  animation: slideDown 0.3s ease;
+}
+
+.laytime-bars {
+  margin-bottom: 12px; /* Reduced from 20px */
+}
+
+.laytime-bar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; /* Reduced from 12px */
+  gap: 8px; /* Reduced from 12px */
+}
+
+.laytime-bar-row.demurrage-row {
+  margin-top: 6px; /* Reduced from 8px */
+  padding-top: 8px; /* Reduced from 12px */
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.laytime-label {
+  font-size: 11px; /* Reduced from 13px */
+  font-weight: 500;
+  color: #6C7280;
+  width: 70px; /* Reduced from 80px */
+}
+
+.laytime-value {
+  font-size: 11px; /* Reduced from 13px */
+  font-weight: 600;
+  color: #374151;
+  width: 80px; /* Reduced from 100px */
+  text-align: right;
+}
+
+.laytime-bar {
+  flex-grow: 1;
+  height: 16px; /* Reduced from 20px */
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px; /* Reduced from 10px */
+  overflow: hidden;
+  position: relative;
+}
+
+.laytime-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.laytime-bar-fill.allowed {
+  background: #27ae60; /* Green for allowed */
+  opacity: 1;
+}
+
+.laytime-bar-fill.used {
+  background: #3498db; /* Blue for used */
+}
+
+.laytime-bar-fill.demurrage {
+  background: #e74c3c; /* Red for demurrage */
+}
+
+.voyage-summary-details {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 12px; /* Reduced from 16px */
+}
+
+.laytime-rate-info {
+  font-size: 11px; /* Reduced from 13px */
+  color: #374151;
+  margin-bottom: 8px; /* Reduced from 12px */
+  padding: 8px; /* Reduced from 10px */
+  background: rgba(52, 152, 219, 0.05);
+  border-radius: 6px; /* Reduced from 8px */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Reduced from 12px */
+}
+
+.rate-label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.rate-value {
+  font-weight: 500;
+  color: #3498db;
+}
+
+.cargo-total {
+  font-weight: 500;
+  color: #6C7280;
+  margin-left: auto;
+}
+
+.port-breakdown {
+  font-size: 11px; /* Reduced from 13px */
+  color: #374151;
+  margin-bottom: 12px; /* Reduced from 16px */
+  line-height: 1.5; /* Reduced from 1.6 */
+}
+
+.breakdown-label {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.port-hours {
+  font-weight: 500;
+  color: #3498db;
+}
+
+.total-hours {
+  font-weight: 700;
+  color: #374151;
+}
+
+.voyage-summary-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px; /* Reduced from 16px */
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.demurrage-amount {
+  font-size: 12px; /* Reduced from 14px */
+  font-weight: 600;
+  color: #6C7280;
+}
+
+.demurrage-amount.has-demurrage {
+  color: #1E8449; /* Darker green text to match the badge */
+  font-size: 14px; /* Reduced from 16px */
+}
+
+.export-button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 6px 12px; /* Reduced from 8px 16px */
+  border-radius: 6px; /* Reduced from 8px */
+  font-size: 11px; /* Reduced from 13px */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.export-button:hover {
+  background: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Responsive adjustments for Voyage Summary */
+@media (max-width: 768px) {
+  .voyage-summary-header {
+    padding: 10px 14px;
+  }
+  
+  .voyage-summary-content {
+    padding: 16px;
+  }
+  
+  .laytime-label {
+    width: 60px;
+    font-size: 12px;
+  }
+  
+  .laytime-value {
+    width: 80px;
+    font-size: 12px;
+  }
+  
+  .port-breakdown {
+    font-size: 12px;
+  }
+  
+  .voyage-summary-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .export-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Compression level adjustments for Voyage Summary */
+.compression-3 .voyage-summary-bar {
+  margin-top: 12px;
+}
+
+.compression-3 .voyage-summary-header {
+  padding: 8px 12px;
+}
+
+.compression-3 .voyage-summary-title {
+  font-size: 12px;
+}
+
+.compression-3 .voyage-summary-content {
+  padding: 12px;
+}
+
+.compression-3 .laytime-bar-row {
+  margin-bottom: 8px;
+}
+
+.compression-3 .port-breakdown {
+  font-size: 11px;
+}
+
+/* Responsive adjustments for Cargo Section */
+@media (max-width: 768px) {
+  .cargo-section-header {
+    padding: 10px 14px;
+  }
+  
+  .cargo-section .cargo-grid-container {
+    padding: 12px;
+  }
+  
+  .cargo-section-title {
+    font-size: 13px;
+  }
+  
+  .cargo-section-count {
+    font-size: 11px;
+  }
+}
+
+/* Compression level adjustments for Cargo Section */
+.compression-3 .cargo-section {
+  margin-top: 12px;
+}
+
+.compression-3 .cargo-section-header {
+  padding: 8px 12px;
+}
+
+.compression-3 .cargo-section-title {
+  font-size: 12px;
+}
+
+.compression-3 .cargo-section .cargo-grid-container {
+  padding: 8px;
+}
+
+/* Voyage Summary Collapsed Info */
+.voyage-summary-collapsed-info {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Reduced from 8px */
+  font-size: 11px; /* Reduced from 13px */
+}
+
+.laytime-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.laytime-label-inline {
+  color: #6C7280;
+  font-weight: 500;
+}
+
+.laytime-value-inline {
+  color: #374151;
+  font-weight: 700;
+  font-size: 12px; /* Reduced from 14px */
+}
+
+.laytime-summary-divider {
+  color: #bdc3c7;
+  font-weight: 300;
+}
+
+.voyage-summary-status-inline {
+  font-size: 10px; /* Reduced from 12px */
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.voyage-summary-status-inline.demurrage {
+  background: #E8F5E9; /* Light green background */
+  color: #1E8449; /* Darker green text */
+  border: 1px solid #A9DFBF; /* Light green border */
+  font-weight: 500;
+}
+
+/* Responsive adjustments for collapsed summaries */
+@media (max-width: 768px) {
+  .cargo-section-summary,
+  .voyage-summary-collapsed-info {
+    font-size: 11px;
+    gap: 6px;
+  }
+  
+  .cargo-summary-item .cargo-count,
+  .laytime-value-inline {
+    font-size: 12px;
+  }
+  
+  .voyage-summary-status-inline {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Hide some elements on very small screens */
+  .cargo-summary-item.total {
+    display: none;
+  }
+  
+  .laytime-label-inline {
+    display: none;
+  }
+  
+  .laytime-summary-divider:first-of-type {
+    margin: 0 4px;
+  }
+}
+
+/* Compression level adjustments for collapsed summaries */
+.compression-3 .cargo-section-summary,
+.compression-3 .voyage-summary-collapsed-info {
+  font-size: 11px;
+  gap: 6px;
+}
+
+.compression-3 .cargo-summary-item .cargo-count,
+.compression-3 .laytime-value-inline {
+  font-size: 12px;
+} 

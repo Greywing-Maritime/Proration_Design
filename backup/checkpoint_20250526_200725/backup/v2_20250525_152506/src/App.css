@@ -1,0 +1,502 @@
+/* App-specific styles */
+.app {
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Add spacing compensation when modal is sticky to prevent content truncation */
+.app.modal-sticky {
+  padding-top: 140px;
+}
+
+/* Main content area */
+.main-content {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+/* Visualization container */
+.visualization-container {
+  flex: 1;
+  min-height: 600px;
+}
+
+/* Control panel */
+.control-panel {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Responsive layout adjustments */
+@media (max-width: 1400px) {
+  .control-panel {
+    width: 280px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .control-panel {
+    width: 260px;
+  }
+  
+  .main-content {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .control-panel {
+    width: 240px;
+  }
+}
+
+@media (max-width: 900px) {
+  .control-panel {
+    width: 220px;
+  }
+  
+  .main-content {
+    gap: 12px;
+  }
+  
+  .app {
+    padding: 16px;
+  }
+  
+  .app.modal-sticky {
+    padding-top: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 12px;
+  }
+  
+  .app.modal-sticky {
+    padding-top: 120px;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-content {
+    flex-direction: column;
+  }
+  
+  .control-panel {
+    width: 100%;
+  }
+  
+  .app {
+    padding: 10px;
+  }
+  
+  .app.modal-sticky {
+    padding-top: 110px;
+  }
+}
+
+/* Tube Map Visualization Styles */
+.tube-map-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.tube-map-svg {
+  width: 100%;
+  min-height: 800px;
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* Port Sections */
+.port-section {
+  margin-bottom: 60px;
+}
+
+.port-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.port-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.port-subtitle {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin: 4px 0 0 0;
+}
+
+.port-duration {
+  background: rgba(44, 62, 80, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/* Transit Sections */
+.transit-section {
+  margin: 40px 0;
+  text-align: center;
+  padding: 20px;
+  background: rgba(116, 75, 162, 0.1);
+  border-radius: 12px;
+  border: 2px dashed rgba(116, 75, 162, 0.3);
+}
+
+.transit-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #764ba2;
+  margin: 0 0 8px 0;
+}
+
+.transit-duration {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+/* Cargo Lines with Centralized Flow */
+.cargo-line {
+  transition: all 0.3s ease;
+  stroke-width: 6;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cargo-line.centralized {
+  stroke-width: 6;
+  opacity: 0.7;
+}
+
+.cargo-line.has-breakout {
+  stroke-width: 8;
+  opacity: 1.0;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Enhanced visibility for port-active cargoes */
+.cargo-line.port-active {
+  opacity: 0.9;
+}
+
+.cargo-line.currently-operating {
+  opacity: 1.0;
+  stroke-width: 8;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.3));
+}
+
+/* Overlap detection helper - adds subtle outline to make overlaps visible */
+.cargo-line.has-breakout {
+  paint-order: stroke fill;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.cargo-line.bundled {
+  stroke-width: 6;
+}
+
+.cargo-line.individual {
+  stroke-width: 8;
+}
+
+.cargo-line.faded {
+  opacity: 0.3;
+}
+
+.cargo-line.highlighted {
+  stroke-width: 10;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* Loading and Discharging Indicators */
+.operation-indicator {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 20;
+}
+
+.operation-indicator.loading {
+  background: rgba(255, 152, 0, 0.9);
+  color: white;
+  border: 2px solid #ff6600;
+}
+
+.operation-indicator.discharging {
+  background: rgba(33, 150, 243, 0.9);
+  color: white;
+  border: 2px solid #1976d2;
+}
+
+/* Stations with Central Spine */
+.station {
+  transition: all 0.3s ease;
+}
+
+.station-shared {
+  fill: rgba(52, 73, 94, 0.8);
+  stroke: #2c3e50;
+  stroke-width: 2;
+}
+
+.station-spine {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+}
+
+.station-individual {
+  stroke: #ffffff;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+}
+
+.station-background {
+  fill: rgba(134, 143, 152, 0.2);
+  stroke: none;
+  rx: 4;
+}
+
+.station.highlighted {
+  filter: drop-shadow(0 0 8px rgba(44, 62, 80, 0.4));
+}
+
+/* Station Labels */
+.station-label {
+  fill: #2c3e50;
+  font-size: 12px;
+  font-weight: 500;
+  text-anchor: start;
+  dominant-baseline: auto;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+}
+
+.station-label tspan {
+  display: block;
+  line-height: 1.4;
+  dominant-baseline: auto;
+}
+
+.station-time {
+  fill: #7f8c8d;
+  font-size: 10px;
+  font-weight: 400;
+  text-anchor: start;
+  dominant-baseline: auto;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+}
+
+/* Responsive font sizes for better readability on smaller screens */
+@media (max-width: 1200px) {
+  .station-label {
+    font-size: 11px;
+  }
+  
+  .station-time {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 768px) {
+  .station-label {
+    font-size: 10px;
+  }
+  
+  .station-time {
+    font-size: 8px;
+  }
+}
+
+/* Time Type Backgrounds */
+.time-background {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.time-background.waiting {
+  fill: url(#waitingPattern);
+}
+
+.time-background.laytime {
+  fill: #2ecc71;
+}
+
+.time-background.deduction {
+  fill: url(#deductionPattern);
+}
+
+.time-background.post-ops {
+  fill: #95a5a6;
+}
+
+/* Enhanced Branch Indicators */
+.branch-indicator {
+  stroke-dasharray: 5,3;
+  stroke-width: 3;
+  fill: none;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  animation: flow-dash 3s linear infinite;
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+.branch-arrow {
+  fill: currentColor;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Concurrent Operation Highlights */
+.concurrent-highlight {
+  fill: none;
+  stroke: #f39c12;
+  stroke-width: 2;
+  stroke-dasharray: 5,5;
+  opacity: 0.8;
+  animation: dash 2s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Simultaneous Operation Groups */
+.simultaneous-group {
+  stroke: #e74c3c;
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 8,4;
+  opacity: 0.7;
+  animation: pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.4; }
+  to { opacity: 0.8; }
+}
+
+/* Event Flow Arrows */
+.flow-arrow {
+  fill: #3498db;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.flow-arrow.active {
+  opacity: 1;
+  animation: flow 2s ease-in-out infinite;
+}
+
+@keyframes flow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* Legend */
+.legend {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 300px;
+}
+
+.legend-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 4px;
+  border-radius: 2px;
+  margin-right: 8px;
+}
+
+.legend-label {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Loading Animation */
+.tube-map-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  flex-direction: column;
+  color: #7f8c8d;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e1e8ed;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

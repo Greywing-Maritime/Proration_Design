@@ -1,0 +1,238 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #F5F6FA 0%, #E8E9ED 100%);
+  min-height: 100vh;
+  color: #374151;
+  line-height: 1.6;
+  margin: 0; /* Ensure no body margins */
+  padding: 0; /* Ensure no body padding */
+}
+
+html {
+  margin: 0; /* Ensure no html margins */
+  padding: 0; /* Ensure no html padding */
+}
+
+/* Updated color scheme - Professional Blue/Gray */
+:root {
+  /* Primary Colors */
+  --primary-blue: #4A90E2;
+  --primary-dark-blue: #2C5282;
+  --primary-light-blue: #E6F2FF;
+  --primary-sky-blue: #87CEEB;
+  
+  /* Neutral Colors */
+  --neutral-white: #FFFFFF;
+  --neutral-off-white: #F8F9FA;
+  --neutral-light-gray: #F5F6FA;
+  --neutral-gray-100: #E8E9ED;
+  --neutral-gray-200: #D1D3D9;
+  --neutral-gray-300: #B8BBC3;
+  --neutral-gray-400: #9EA2AD;
+  --neutral-gray-500: #6C7280;
+  --neutral-gray-600: #4B5563;
+  --neutral-gray-700: #374151;
+  --neutral-gray-800: #1F2937;
+  --neutral-black: #000000;
+  
+  /* Status Colors */
+  --status-success: #10B981;
+  --status-warning: #F59E0B;
+  --status-error: #EF4444;
+  --status-info: #3B82F6;
+  
+  /* Operational Colors */
+  --ops-loading: #FF9800;
+  --ops-discharging: #2196F3;
+  --ops-waiting: #9C27B0;
+  --ops-laytime: #4CAF50;
+  --ops-demurrage: #F44336;
+  
+  /* Port Theme Colors (keeping existing for compatibility) */
+  --port-kuala-tanjung: #E91E63;
+  --port-kandla: #9C27B0;
+  --port-qasim: #2196F3;
+  
+  /* Legacy tube colors (keeping for compatibility) */
+  --tube-blue: var(--primary-blue);
+  --tube-red: var(--status-error);
+  --tube-yellow: var(--status-warning);
+  --tube-green: var(--status-success);
+  --tube-purple: var(--port-kandla);
+  --tube-orange: var(--ops-loading);
+  --tube-brown: #b36305;
+  --tube-pink: var(--port-kuala-tanjung);
+  --tube-gray: var(--neutral-gray-400);
+  --station-white: var(--neutral-white);
+  --background-navy: var(--primary-dark-blue);
+  --text-dark: var(--neutral-gray-700);
+  --text-light: var(--neutral-gray-500);
+  --border-light: var(--neutral-gray-100);
+  --success-green: var(--status-success);
+  --warning-orange: var(--status-warning);
+  --danger-red: var(--status-error);
+}
+
+/* Visualization container */
+.visualization-container {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-gray-100);
+  overflow: hidden;
+}
+
+/* Control panel */
+.control-panel {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--neutral-gray-100);
+  height: fit-content;
+}
+
+.control-section {
+  margin-bottom: 16px;
+}
+
+.control-section h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 6px;
+}
+
+/* Button styles */
+.btn {
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 2px;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: var(--primary-dark-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.25);
+}
+
+.btn.active {
+  background: var(--primary-dark-blue);
+  box-shadow: 0 2px 8px rgba(44, 82, 130, 0.25);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+/* Port focus buttons */
+.btn-port {
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 10px;
+}
+
+.btn-kuala-tanjung {
+  background: #e91e63;
+}
+
+.btn-kuala-tanjung:hover {
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+.btn-kandla {
+  background: #9c27b0;
+}
+
+.btn-kandla:hover {
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+.btn-port-qasim {
+  background: #2196f3;
+}
+
+.btn-port-qasim:hover {
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+/* Time tracking panel */
+.time-tracking {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.cargo-time-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.cargo-time-item:last-child {
+  border-bottom: none;
+}
+
+.cargo-name {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.time-value {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--tube-blue);
+}
+
+/* Progress bars */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #e1e8ed;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+/* Responsive design - Remove conflicting styles, let App.css handle layout */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: var(--text-light);
+} 

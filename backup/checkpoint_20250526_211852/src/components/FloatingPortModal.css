@@ -1,0 +1,103 @@
+/* FloatingPortModal.css - Styles for individual floating port modals that align with port sections in the tube map */
+
+/* Individual floating modal - positioned absolutely or fixed next to port sections */
+.floating-port-modal {
+  width: 380px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for transform and shadow only */
+  z-index: 100;
+  overflow: hidden;
+  will-change: top, position; /* Optimize for position changes */
+}
+
+/* Sticky state - higher z-index to stay above content */
+.floating-port-modal.is-sticky {
+  z-index: 500;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Highlighted state when port is in view */
+.floating-port-modal:has(.floating-situational-panel.highlighted) {
+  transform: translateX(-5px);
+  box-shadow: 0 8px 24px rgba(52, 152, 219, 0.3);
+  z-index: 501;
+}
+
+/* Animation for smooth appearance */
+.floating-port-modal {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive width adjustments to match sidebar */
+@media (max-width: 1400px) {
+  .floating-port-modal {
+    width: 320px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .floating-port-modal {
+    width: 300px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .floating-port-modal {
+    width: 280px;
+  }
+}
+
+/* On smaller screens when layout stacks */
+@media (max-width: 900px) {
+  .floating-port-modal {
+    position: relative !important;
+    width: 100%;
+    margin-bottom: 16px;
+    right: auto !important;
+    top: auto !important;
+  }
+  
+  .floating-port-modal.is-sticky {
+    z-index: 100;
+  }
+}
+
+/* Hide on very small screens to prevent clutter */
+@media (max-width: 768px) {
+  .floating-port-modal {
+    display: none;
+  }
+}
+
+/* Custom scrollbar for the sidebar area */
+.sidebar-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-area::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+.sidebar-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.sidebar-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+} 

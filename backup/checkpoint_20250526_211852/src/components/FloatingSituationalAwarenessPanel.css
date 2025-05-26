@@ -1,0 +1,805 @@
+/* File: src/components/FloatingSituationalAwarenessPanel.css */
+/* Purpose: Styles for floating situational awareness panels positioned next to ports */
+
+.floating-situational-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Use full width of container (matches right sidebar) */
+  width: 100%;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.floating-situational-panel.collapsed {
+  max-height: 50px; /* Compact when collapsed */
+}
+
+.floating-situational-panel.expanded {
+  max-height: none;
+  height: auto;
+}
+
+/* Panel Header - Compact but readable */
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px; /* Increased base padding */
+  cursor: pointer;
+  transition: background-color 0.2s ease, padding 0.3s ease;
+  border-radius: 8px 8px 0 0;
+  flex-shrink: 0;
+  min-height: 50px; /* Slightly taller base height */
+  gap: 8px; /* Add gap between flex items */
+}
+
+/* Expanded state header - more spacious */
+.floating-situational-panel.expanded .panel-header {
+  padding: 14px 16px; /* More padding when expanded */
+  min-height: 56px; /* Slightly taller when expanded */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* Add subtle separator */
+  margin-bottom: 8px; /* Add space between header and content */
+}
+
+.panel-header:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.port-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+/* Larger port indicator when expanded */
+.floating-situational-panel.expanded .port-indicator {
+  gap: 10px;
+}
+
+.port-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0; /* Prevent dot from shrinking */
+  transition: all 0.3s ease;
+}
+
+/* Larger dot when expanded */
+.floating-situational-panel.expanded .port-color-dot {
+  width: 12px;
+  height: 12px;
+}
+
+.port-name {
+  font-weight: 600;
+  font-size: 13px; /* Readable size for 380px width */
+  color: #374151;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if too long */
+  transition: font-size 0.3s ease;
+}
+
+/* Larger port name when expanded */
+.floating-situational-panel.expanded .port-name {
+  font-size: 14px;
+}
+
+.quick-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Right-align the stats */
+  gap: 3px; /* Slightly increased gap */
+  margin: 0 10px; /* Reduced margins for more content space */
+  flex-shrink: 0; /* Prevent shrinking */
+  transition: all 0.3s ease;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+/* More spacing in quick stats when expanded */
+.floating-situational-panel.expanded .quick-stats {
+  gap: 4px;
+  margin: 0 16px;
+}
+
+.operation-type {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6C7280;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1.2; /* Ensure consistent line height */
+  transition: font-size 0.3s ease;
+}
+
+/* Larger operation type when expanded */
+.floating-situational-panel.expanded .operation-type {
+  font-size: 11px;
+}
+
+.cargo-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: #34495e;
+  line-height: 1.2; /* Ensure consistent line height */
+  transition: font-size 0.3s ease;
+}
+
+/* Larger cargo count when expanded */
+.floating-situational-panel.expanded .cargo-count {
+  font-size: 12px;
+}
+
+.expand-toggle {
+  font-size: 16px; /* Slightly larger for better clickability */
+  font-weight: 600;
+  color: #6C7280;
+  transition: transform 0.2s ease, font-size 0.3s ease;
+  width: 20px; /* Fixed width */
+  height: 20px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Larger toggle when expanded */
+.floating-situational-panel.expanded .expand-toggle {
+  font-size: 18px;
+  width: 24px;
+  height: 24px;
+}
+
+.floating-situational-panel.expanded .expand-toggle {
+  transform: rotate(0deg);
+}
+
+/* Comprehensive View Panel Content - Compact but readable */
+.panel-content.comprehensive-view {
+  padding: 0 12px 12px 12px;
+  overflow: visible;
+}
+
+/* Section Styling - Compact */
+.section {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.section-title {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #3498db;
+}
+
+/* Port Overview Section - Compact grid */
+.port-overview .overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+}
+
+.stat-label {
+  font-size: 9px;
+  font-weight: 500;
+  color: #6C7280;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.stat-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Time Analysis Section - Compact */
+.time-analysis .time-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.time-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border-left: 3px solid;
+}
+
+.time-item.waiting {
+  background: rgba(243, 156, 18, 0.1);
+  border-left-color: #f39c12;
+}
+
+.time-item.laytime {
+  background: rgba(46, 204, 113, 0.1);
+  border-left-color: #2ecc71;
+}
+
+.time-item.deductions {
+  background: rgba(231, 76, 60, 0.1);
+  border-left-color: #e74c3c;
+}
+
+.time-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.time-value {
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Laytime Calculation */
+.laytime-calculation {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.laytime-calculation h6 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 0.75rem;
+  color: #374151; /* Dark grey text */
+}
+
+.calc-row.net {
+  font-weight: 600;
+  color: #111827; /* Almost black for emphasis */
+  border-top: 1px solid #E5E7EB;
+  margin-top: 4px;
+  padding-top: 8px;
+}
+
+.calc-row.total {
+  font-weight: 500;
+  color: #1F2937; /* Dark grey */
+  border-top: 1px solid #E5E7EB;
+  margin-top: 4px;
+  padding-top: 8px;
+}
+
+/* Proration Breakdown for Port Qasim */
+.proration-breakdown {
+  background: rgba(248, 249, 250, 1); /* Light grey background */
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 0.75rem;
+  color: #374151; /* Dark grey text */
+}
+
+.breakdown-item.indent {
+  padding-left: 15px;
+}
+
+.breakdown-item.indent-2 {
+  padding-left: 30px;
+  font-style: italic;
+  color: #6B7280; /* Medium grey for secondary info */
+}
+
+.breakdown-item.subtotal {
+  font-weight: 600;
+  color: #1F2937; /* Darker text for emphasis */
+  padding-top: 8px;
+}
+
+.breakdown-item.net {
+  font-weight: 700;
+  color: #111827; /* Almost black for maximum emphasis */
+  font-size: 0.85rem;
+  padding-top: 8px;
+  border-top: 2px solid #E5E7EB; /* Light grey border */
+  margin-top: 4px;
+}
+
+.breakdown-divider {
+  height: 1px;
+  background: #E5E7EB; /* Light grey divider */
+  margin: 8px 0;
+}
+
+.breakdown-label {
+  flex: 1;
+}
+
+.breakdown-value {
+  font-weight: 500;
+  text-align: right;
+  color: #111827; /* Dark text for values */
+}
+
+/* Validation Status */
+.validation-status {
+  background: rgba(243, 244, 246, 1); /* Slightly darker light grey */
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.validation-status h6 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1F2937; /* Dark grey heading */
+}
+
+.validation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 0.75rem;
+  color: #374151; /* Dark grey text */
+}
+
+.validation-item.status {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #E5E7EB; /* Light grey border */
+  font-weight: 600;
+}
+
+.validation-item .verified {
+  color: #059669; /* Green for verified - darker shade for better contrast */
+  font-weight: 700;
+}
+
+.validation-item .mismatch {
+  color: #DC2626; /* Red for mismatch - darker shade for better contrast */
+  font-weight: 700;
+}
+
+/* Proration Info */
+.proration-info {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #E5E7EB; /* Light grey border */
+}
+
+.proration-info h6 {
+  margin: 0 0 6px 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: #374151; /* Dark grey for better readability */
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Cargo Details Section - Compact */
+.cargo-details .cargo-group {
+  margin-bottom: 12px;
+}
+
+.cargo-details .cargo-group:last-child {
+  margin-bottom: 0;
+}
+
+.cargo-group-title {
+  margin: 0 0 8px 0;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cargo-group-title.unilever {
+  background: rgba(227, 32, 23, 0.1);
+  color: #EF4444;
+  border: 1px solid rgba(227, 32, 23, 0.2);
+}
+
+.cargo-group-title.other {
+  background: rgba(0, 120, 42, 0.1);
+  color: #00782a;
+  border: 1px solid rgba(0, 120, 42, 0.2);
+}
+
+.cargo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cargo-item {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.cargo-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+}
+
+.cargo-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cargo-color-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.cargo-name {
+  font-size: 10px;
+  font-weight: 500;
+  color: #374151;
+  flex: 1;
+}
+
+.cargo-quantity {
+  font-size: 10px;
+  font-weight: 600;
+  color: #34495e;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* Cargo percentage display */
+.cargo-percentage {
+  font-size: 9px;
+  color: #6B7280;
+  padding-left: 24px; /* Align with cargo name (8px indicator + 8px gap + 8px padding) */
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .port-overview .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  
+  .section {
+    margin-bottom: 10px;
+  }
+  
+  .section-title {
+    font-size: 11px;
+  }
+}
+
+/* Animation for smooth transitions */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.floating-situational-panel {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Highlighted state for port in view */
+.floating-situational-panel.highlighted {
+  box-shadow: 0 8px 24px rgba(52, 152, 219, 0.3);
+  border-color: rgba(52, 152, 219, 0.4);
+  transform: scale(1.02);
+}
+
+/* Alternative: Two-row header layout for expanded state when needed */
+@media (max-width: 400px) {
+  .floating-situational-panel.expanded .panel-header {
+    flex-wrap: wrap;
+    min-height: auto;
+    padding: 12px 16px;
+  }
+  
+  .floating-situational-panel.expanded .port-indicator {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .floating-situational-panel.expanded .quick-stats {
+    margin: 0;
+    margin-right: auto; /* Push stats to the left on second row */
+  }
+  
+  .floating-situational-panel.expanded .expand-toggle {
+    margin-left: auto; /* Keep toggle on the right */
+  }
+}
+
+/* For panels that need more space regardless of screen size */
+.floating-situational-panel.needs-space.expanded .panel-header {
+  flex-wrap: wrap;
+  min-height: auto;
+  padding: 12px 16px;
+}
+
+.floating-situational-panel.needs-space.expanded .port-indicator {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.floating-situational-panel.needs-space.expanded .quick-stats {
+  margin: 0;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+}
+
+.floating-situational-panel.needs-space.expanded .expand-toggle {
+  margin-left: auto;
+}
+
+/* Port Qasim specific adjustments */
+.floating-situational-panel.port-qasim .panel-header {
+  min-height: 52px; /* Slightly taller for Port Qasim */
+  padding: 12px 16px; /* More padding by default */
+}
+
+.floating-situational-panel.port-qasim.expanded .panel-header {
+  min-height: 60px; /* Even more height when expanded */
+  padding: 16px 18px;
+}
+
+/* Adjust font sizes for Port Qasim to prevent cramping */
+.floating-situational-panel.port-qasim .port-name {
+  font-size: 12px; /* Slightly smaller to fit better */
+}
+
+.floating-situational-panel.port-qasim.expanded .port-name {
+  font-size: 13px; /* Still readable but not too large */
+}
+
+/* Give more space to stats in Port Qasim */
+.floating-situational-panel.port-qasim .quick-stats {
+  margin: 0 14px;
+}
+
+.floating-situational-panel.port-qasim.expanded .quick-stats {
+  margin: 0 18px;
+}
+
+/* Optional: Use two-row layout for Port Qasim when needed */
+@media (max-width: 450px) {
+  .floating-situational-panel.port-qasim .panel-header {
+    flex-wrap: wrap;
+    min-height: auto;
+  }
+  
+  .floating-situational-panel.port-qasim .port-indicator {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+  
+  .floating-situational-panel.port-qasim .quick-stats {
+    margin: 0;
+    margin-right: auto;
+  }
+}
+
+/* Key Events Section */
+.floating-situational-panel .section.key-events {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e1e8ed;
+}
+
+.floating-situational-panel .section-header.collapsible {
+  cursor: pointer;
+  user-select: none;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.floating-situational-panel .section-header.collapsible:hover {
+  background: #e9ecef;
+}
+
+.floating-situational-panel .section-title .expand-indicator {
+  float: right;
+  font-weight: 600;
+  color: #6c757d;
+  transition: transform 0.2s ease;
+}
+
+.floating-situational-panel .key-events-content {
+  margin-top: 12px;
+}
+
+.floating-situational-panel .events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.floating-situational-panel .event-item {
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #6c757d;
+  transition: all 0.2s ease;
+}
+
+.floating-situational-panel .event-item.nor {
+  border-left-color: #17a2b8;
+}
+
+.floating-situational-panel .event-item.commence {
+  border-left-color: #28a745;
+}
+
+.floating-situational-panel .event-item.others {
+  border-left-color: #ffc107;
+}
+
+.floating-situational-panel .event-item.unilever {
+  border-left-color: #e91e63;
+}
+
+.floating-situational-panel .event-item.complete {
+  border-left-color: #dc3545;
+}
+
+.floating-situational-panel .event-time {
+  font-weight: 600;
+  color: #495057;
+  white-space: nowrap;
+  min-width: 100px;
+  font-size: 12px;
+}
+
+.floating-situational-panel .event-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.floating-situational-panel .event-label {
+  font-size: 13px;
+  color: #212529;
+  font-weight: 500;
+}
+
+.floating-situational-panel .event-duration {
+  font-size: 11px;
+  color: #6c757d;
+}
+
+.floating-situational-panel .duration-arrow {
+  color: #007bff;
+  font-weight: 500;
+}
+
+.floating-situational-panel .duration-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.floating-situational-panel .gross-duration,
+.floating-situational-panel .net-duration {
+  font-size: 11px;
+  color: #6c757d;
+}
+
+.floating-situational-panel .net-duration {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.floating-situational-panel .duration-summary {
+  margin-top: 12px;
+  padding: 12px;
+  background: #e7f3ff;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #b8daff;
+}
+
+.floating-situational-panel .summary-label {
+  font-weight: 600;
+  color: #004085;
+  font-size: 13px;
+}
+
+.floating-situational-panel .summary-value {
+  font-weight: 700;
+  color: #004085;
+  font-size: 14px;
+}
+
+.floating-situational-panel .no-events {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 20px;
+  font-size: 13px;
+}
+
+/* Laytime basis indicator in header */
+/* Removed - no longer displayed in header
+.floating-situational-panel .laytime-basis-indicator {
+  font-size: 10px;
+  color: #6c757d;
+  font-weight: 500;
+  margin-left: 8px;
+  padding: 2px 6px;
+  background: #e9ecef;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+*/ 

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Modal Test - Nested Scroll</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+        }
+        
+        .app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        /* Modal that should stick */
+        .cargo-modal {
+            background: white;
+            padding: 20px;
+            margin: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .cargo-modal.sticky {
+            position: fixed;
+            top: 0;
+            left: 16px;
+            right: 16px;
+            margin: 0;
+            z-index: 100;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .placeholder {
+            display: none;
+        }
+        
+        .placeholder.active {
+            display: block;
+            height: 80px;
+            margin: 16px;
+        }
+        
+        /* Main layout */
+        .main-layout {
+            display: flex;
+            flex: 1;
+            gap: 16px;
+            padding: 0 16px 16px;
+        }
+        
+        /* Scrolling container */
+        .visualization-area {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            overflow: auto;
+            height: 500px; /* Fixed height to enable scrolling */
+            padding: 20px;
+        }
+        
+        .content {
+            height: 2000px;
+            background: linear-gradient(to bottom, #3498db, #2ecc71);
+            border-radius: 8px;
+            padding: 20px;
+            color: white;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Placeholder for when modal is sticky -->
+        <div class="placeholder" id="placeholder"></div>
+        
+        <!-- Modal that should become sticky -->
+        <div class="cargo-modal" id="modal">
+            <h2>Cargo Status Modal</h2>
+            <p>This modal should stick to the top when scrolling the visualization area</p>
+        </div>
+        
+        <div class="main-layout">
+            <!-- Scrolling container -->
+            <div class="visualization-area" id="scrollContainer">
+                <div class="content">
+                    <h3>Scroll this area to see the sticky behavior</h3>
+                    <p>The modal above should stick to the top of the viewport when you scroll down.</p>
+                    <p style="margin-top: 100px;">Keep scrolling...</p>
+                    <p style="margin-top: 200px;">The modal should now be sticky!</p>
+                    <p style="margin-top: 400px;">Scroll back up to see it return to normal position.</p>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Sidebar</h3>
+                <p>This is the sidebar area</p>
+            </div>
+        </div>
+        
+        <!-- Status indicator -->
+        <div class="status" id="status">
+            Scroll: 0px | Modal: Normal
+        </div>
+    </div>
+    
+    <script>
+        const modal = document.getElementById('modal');
+        const placeholder = document.getElementById('placeholder');
+        const scrollContainer = document.getElementById('scrollContainer');
+        const status = document.getElementById('status');
+        
+        let isSticky = false;
+        let initialTop = null;
+        let hasInitialized = false;
+        
+        function handleScroll() {
+            const scrollTop = scrollContainer.scrollTop;
+            
+            // Update status
+            status.textContent = `Scroll: ${scrollTop}px | Modal: ${isSticky ? 'Sticky' : 'Normal'}`;
+            
+            // Reset when at top
+            if (scrollTop < 5) {
+                if (isSticky) {
+                    modal.classList.remove('sticky');
+                    placeholder.classList.remove('active');
+                    isSticky = false;
+                }
+                hasInitialized = false;
+                initialTop = null;
+                return;
+            }
+            
+            // Initialize on first scroll
+            if (!hasInitialized && scrollTop > 5) {
+                const modalRect = modal.getBoundingClientRect();
+                const containerRect = scrollContainer.getBoundingClientRect();
+                initialTop = modalRect.top - containerRect.top;
+                hasInitialized = true;
+                
+                // Set placeholder height
+                placeholder.style.height = modal.offsetHeight + 'px';
+            }
+            
+            // Check if should be sticky
+            if (initialTop !== null) {
+                const shouldBeSticky = scrollTop > initialTop;
+                
+                if (shouldBeSticky !== isSticky) {
+                    isSticky = shouldBeSticky;
+                    
+                    if (isSticky) {
+                        modal.classList.add('sticky');
+                        placeholder.classList.add('active');
+                    } else {
+                        modal.classList.remove('sticky');
+                        placeholder.classList.remove('active');
+                    }
+                }
+            }
+        }
+        
+        scrollContainer.addEventListener('scroll', handleScroll);
+    </script>
+</body>
+</html> 

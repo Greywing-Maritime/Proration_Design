@@ -1,0 +1,198 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+  line-height: 1.6;
+  margin: 0; /* Ensure no body margins */
+  padding: 0; /* Ensure no body padding */
+}
+
+html {
+  margin: 0; /* Ensure no html margins */
+  padding: 0; /* Ensure no html padding */
+}
+
+/* London Underground inspired colors */
+:root {
+  --tube-blue: #0019a8;
+  --tube-red: #e32017;
+  --tube-yellow: #ffd320;
+  --tube-green: #00782a;
+  --tube-purple: #9b0058;
+  --tube-orange: #ff6600;
+  --tube-brown: #b36305;
+  --tube-pink: #f3a9bb;
+  --tube-gray: #868f98;
+  --station-white: #ffffff;
+  --background-navy: #2c3e50;
+  --text-dark: #2c3e50;
+  --text-light: #7f8c8d;
+  --border-light: #e1e8ed;
+  --success-green: #2ecc71;
+  --warning-orange: #f39c12;
+  --danger-red: #e74c3c;
+}
+
+/* Visualization container */
+.visualization-container {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+/* Control panel */
+.control-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: fit-content;
+}
+
+.control-section {
+  margin-bottom: 24px;
+}
+
+.control-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 8px;
+}
+
+/* Button styles */
+.btn {
+  background: var(--tube-blue);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 4px;
+  display: inline-block;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 25, 168, 0.3);
+}
+
+.btn.active {
+  background: var(--tube-red);
+  box-shadow: 0 4px 12px rgba(227, 32, 23, 0.3);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* Port focus buttons */
+.btn-port {
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+}
+
+.btn-kuala-tanjung {
+  background: #e91e63;
+}
+
+.btn-kuala-tanjung:hover {
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+}
+
+.btn-kandla {
+  background: #9c27b0;
+}
+
+.btn-kandla:hover {
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+.btn-port-qasim {
+  background: #2196f3;
+}
+
+.btn-port-qasim:hover {
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+/* Time tracking panel */
+.time-tracking {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.cargo-time-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.cargo-time-item:last-child {
+  border-bottom: none;
+}
+
+.cargo-name {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.time-value {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--tube-blue);
+}
+
+/* Progress bars */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e1e8ed;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+/* Responsive design - Remove conflicting styles, let App.css handle layout */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: var(--text-light);
+} 

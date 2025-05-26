@@ -1,0 +1,6 @@
+Checkpoint v3 created at: Sun May 25 17:14:29 +08 2025
+Features included:
+- All cargo operations displayed at each port
+- OTHER charterer cargoes (4S, 6S, 8W, 9W) with individual completion times
+- Proper branching and return to center for each cargo
+- Fixed visualization logic for multiple charterers

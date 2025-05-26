@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proration Display Test</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 380px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Proration Info Styles */
+        .proration-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #E5E7EB;
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .proration-info h6 {
+            margin: 0 0 12px 0;
+            font-size: 11px;
+            font-weight: 700;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* Proration Table */
+        .proration-table {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .proration-row {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .proration-label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .proration-value {
+            text-align: right;
+            font-weight: 500;
+            color: #212529;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .proration-percent {
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 11px;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .proration-divider {
+            height: 1px;
+            background: #343a40;
+            margin: 8px 0;
+        }
+
+        .proration-row.total {
+            font-weight: 700;
+            padding-top: 4px;
+        }
+
+        .proration-row.total .proration-label {
+            color: #212529;
+        }
+
+        .proration-row.total .proration-value {
+            color: #0019a8;
+            font-weight: 700;
+        }
+
+        .proration-row.total .proration-percent {
+            color: #0019a8;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Proration Display Preview</h2>
+        
+        <div class="proration-info">
+            <h6>PRORATION CALCULATION BASIS</h6>
+            <div class="proration-table">
+                <div class="proration-row">
+                    <span class="proration-label">UNILEVER:</span>
+                    <span class="proration-value">3,003.315 MT</span>
+                    <span class="proration-percent">(13.06%)</span>
+                </div>
+                <div class="proration-row">
+                    <span class="proration-label">OTHERS:</span>
+                    <span class="proration-value">20,001.223 MT</span>
+                    <span class="proration-percent">(86.94%)</span>
+                </div>
+                <div class="proration-divider"></div>
+                <div class="proration-row total">
+                    <span class="proration-label">TOTAL:</span>
+                    <span class="proration-value">23,004.538 MT</span>
+                    <span class="proration-percent">(100.00%)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
