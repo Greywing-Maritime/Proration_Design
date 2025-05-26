@@ -1,0 +1,198 @@
+/* File: src/components/PortQasimAttributionTable.css */
+/* Purpose: Styles for the Port Qasim time attribution table component */
+
+.attribution-table-container {
+  margin-top: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e1e8ed;
+}
+
+.attribution-table-container.collapsed {
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.attribution-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 16px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #2196f3;
+  padding-bottom: 8px;
+}
+
+.attribution-table {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.attribution-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.attribution-table thead {
+  background: #34495e;
+  color: white;
+}
+
+.attribution-table th {
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-right: 1px solid #2c3e50;
+}
+
+.attribution-table th:last-child {
+  border-right: none;
+}
+
+.attribution-table tbody tr {
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.attribution-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.attribution-table td {
+  padding: 8px;
+  vertical-align: top;
+}
+
+/* Period cell styling */
+.period-cell {
+  min-width: 180px;
+}
+
+.period-name {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.time-range {
+  font-size: 10px;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* Duration cells */
+.duration-cell {
+  text-align: right;
+  font-weight: 500;
+  color: #34495e;
+  min-width: 80px;
+}
+
+/* UNILEVER cell */
+.unilever-cell {
+  text-align: right;
+  font-weight: 600;
+  color: #e32017;
+  min-width: 80px;
+}
+
+/* Others cell */
+.others-cell {
+  text-align: right;
+  font-weight: 600;
+  color: #00782a;
+  min-width: 80px;
+}
+
+/* Method cell */
+.method-cell {
+  font-size: 11px;
+  color: #7f8c8d;
+  min-width: 150px;
+}
+
+/* Totals row */
+.totals-row {
+  background: #ecf0f1;
+  font-weight: 700;
+  border-top: 2px solid #34495e;
+}
+
+.totals-row td {
+  padding: 12px 8px;
+  color: #2c3e50;
+}
+
+.totals-row .unilever-cell {
+  color: #e32017;
+  font-size: 14px;
+}
+
+.totals-row .others-cell {
+  color: #00782a;
+  font-size: 14px;
+}
+
+/* Validation section */
+.validation-section {
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.validation-status {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.validation-status.valid {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.validation-status.invalid {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Proration note */
+.proration-note {
+  font-size: 11px;
+  color: #7f8c8d;
+  text-align: center;
+  padding: 8px;
+  background: #f0f8ff;
+  border-radius: 4px;
+  border: 1px solid #d0e8ff;
+}
+
+.proration-note strong {
+  color: #2c3e50;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .attribution-table {
+    font-size: 10px;
+  }
+  
+  .period-cell {
+    min-width: 120px;
+  }
+  
+  .attribution-table th,
+  .attribution-table td {
+    padding: 6px 4px;
+  }
+} 
