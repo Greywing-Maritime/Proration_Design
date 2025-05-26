@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laytime Basis Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .port-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .port-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .port-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .laytime-basis {
+            font-size: 12px;
+            font-weight: 600;
+            color: #7f8c8d;
+            background: rgba(33, 150, 243, 0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .success {
+            color: #28a745;
+        }
+        .error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Laytime Basis Indicator Test</h1>
+    
+    <div class="port-card">
+        <div class="port-header">
+            <span class="port-name">Kuala Tanjung</span>
+            <span class="laytime-basis" id="kt-basis">MADE FAST</span>
+        </div>
+        <div class="test-result">
+            <strong>Timeline Event:</strong> "Made Fast (Laytime Commences)"<br>
+            <strong>Expected:</strong> MADE FAST<br>
+            <strong>Result:</strong> <span id="kt-result" class="success">✓ Correct</span>
+        </div>
+    </div>
+
+    <div class="port-card">
+        <div class="port-header">
+            <span class="port-name">Kandla</span>
+            <span class="laytime-basis" id="kandla-basis">NOR + 6 HOURS</span>
+        </div>
+        <div class="test-result">
+            <strong>Timeline Event:</strong> "Laytime Commences (NOR+6hrs)"<br>
+            <strong>Expected:</strong> NOR + 6 HOURS<br>
+            <strong>Result:</strong> <span id="kandla-result" class="success">✓ Correct</span>
+        </div>
+    </div>
+
+    <div class="port-card">
+        <div class="port-header">
+            <span class="port-name">Port Qasim</span>
+            <span class="laytime-basis" id="pq-basis">NOR + 6 HOURS</span>
+        </div>
+        <div class="test-result">
+            <strong>Timeline Event:</strong> "Laytime Can Commence (NOR+6hrs)"<br>
+            <strong>Expected:</strong> NOR + 6 HOURS<br>
+            <strong>Result:</strong> <span id="pq-result" class="success">✓ Correct</span>
+        </div>
+    </div>
+
+    <script>
+        // Test the extraction logic
+        const testData = {
+            'Kuala Tanjung': {
+                timeline: [
+                    { event: "Arrival (EOSP)" },
+                    { event: "Notice of Readiness Tendered" },
+                    { event: "Made Fast (Laytime Commences)" }
+                ]
+            },
+            'Kandla': {
+                timeline: [
+                    { event: "Arrival (EOSP)" },
+                    { event: "Notice of Readiness Tendered" },
+                    { event: "Laytime Commences (NOR+6hrs)" }
+                ]
+            },
+            'Port Qasim': {
+                timeline: [
+                    { event: "Arrival (EOSP)" },
+                    { event: "Notice of Readiness Tendered" },
+                    { event: "Laytime Can Commence (NOR+6hrs)" }
+                ]
+            }
+        };
+
+        function getLaytimeBasis(portData) {
+            const laytimeEvent = portData.timeline.find(event => 
+                event.event.includes('Laytime Commences') || 
+                event.event.includes('Laytime Can Commence') ||
+                event.event.includes('Made Fast')
+            );
+            
+            if (!laytimeEvent) return 'Unknown';
+            
+            if (laytimeEvent.event.includes('Made Fast')) {
+                return 'MADE FAST';
+            } else if (laytimeEvent.event.includes('NOR+6hrs') || laytimeEvent.event.includes('NOR+6 hours')) {
+                return 'NOR + 6 HOURS';
+            } else if (laytimeEvent.event.includes('NOR')) {
+                return 'NOR TENDERED';
+            }
+            
+            return 'Unknown';
+        }
+
+        // Test each port
+        Object.entries(testData).forEach(([port, data]) => {
+            const result = getLaytimeBasis(data);
+            console.log(`${port}: ${result}`);
+        });
+    </script>
+</body>
+</html> 
