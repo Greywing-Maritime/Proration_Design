@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Events Implementation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .implementation-summary {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 3px solid #28a745;
+            border-radius: 4px;
+        }
+        .code-example {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .port-example {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .port-example h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Key Events Implementation - Test Summary</h1>
+        
+        <div class="implementation-summary">
+            <h2>✅ Implementation Complete</h2>
+            <p>The "Display Key Event Times with Durations" feature has been successfully implemented in the FloatingSituationalAwarenessPanel component.</p>
+        </div>
+
+        <h2>Features Implemented:</h2>
+        <ul class="feature-list">
+            <li>✓ Collapsible "Key Events" section added to each port's floating panel</li>
+            <li>✓ Automatic extraction of key events from timeline data</li>
+            <li>✓ Duration calculations between consecutive events</li>
+            <li>✓ Special handling for Port Qasim with gross/net duration display</li>
+            <li>✓ Color-coded event types (NOR, Commence, Complete, etc.)</li>
+            <li>✓ Total duration summary at the bottom</li>
+            <li>✓ Laytime basis indicator in the panel header</li>
+        </ul>
+
+        <h2>Key Events Displayed:</h2>
+        
+        <div class="port-example">
+            <h3>Kuala Tanjung</h3>
+            <div class="code-example">
+NOR Tendered:        26 Apr 13:35
+Laytime Commenced:   26 Apr 16:45 (Made Fast)
+Laytime Completed:   28 Apr 19:00 (Hose Off)
+Duration:            50h 15m
+            </div>
+        </div>
+
+        <div class="port-example">
+            <h3>Kandla</h3>
+            <div class="code-example">
+NOR Tendered:        06 May 09:20
+Laytime Commenced:   06 May 15:20 (NOR+6hrs)
+Laytime Completed:   11 May 05:50 (Hose Off)
+Gross Duration:      110h 30m
+Net Duration:        106h 00m
+            </div>
+        </div>
+
+        <div class="port-example">
+            <h3>Port Qasim</h3>
+            <div class="code-example">
+NOR Tendered:        12 May 05:45
+Laytime Commenced:   12 May 11:45 (NOR+6hrs)
+Others Commenced:    17 May 07:35
+UNILEVER Commenced:  17 May 12:45
+Laytime Completed:   17 May 21:40 (Hose Off)
+            </div>
+        </div>
+
+        <h2>Technical Details:</h2>
+        <ul>
+            <li><strong>Component Modified:</strong> FloatingSituationalAwarenessPanel.js</li>
+            <li><strong>New State Added:</strong> keyEventsExpanded (for collapsible functionality)</li>
+            <li><strong>New Functions:</strong>
+                <ul>
+                    <li>getKeyEvents() - Extracts key events from timeline</li>
+                    <li>calculateDuration() - Calculates time between events</li>
+                    <li>getLaytimeBasis() - Extracts laytime commencement basis</li>
+                </ul>
+            </li>
+            <li><strong>CSS Styles:</strong> Added comprehensive styling for the new section</li>
+        </ul>
+
+        <h2>How to View:</h2>
+        <ol>
+            <li>Open the application at <a href="http://localhost:3003" target="_blank">http://localhost:3003</a></li>
+            <li>Look at any port's floating panel on the right side</li>
+            <li>Click on the "Key Events" section header to expand/collapse</li>
+            <li>View the chronological list of key events with durations</li>
+        </ol>
+    </div>
+</body>
+</html> 
