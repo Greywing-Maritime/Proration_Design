@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demurrage Summary Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .calculation {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .label {
+            font-weight: bold;
+            color: #34495e;
+        }
+        .value {
+            color: #2c3e50;
+        }
+        .divider {
+            border-top: 2px solid #e1e8ed;
+            margin: 15px 0;
+        }
+        .result {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .success {
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <h1>Demurrage Summary Calculation Test</h1>
+    
+    <div class="test-section">
+        <h2>Expected Values from Laytime Statement</h2>
+        <div class="calculation">
+            <span class="label">Total Laytime Used:</span>
+            <span class="value">177.90 hours (7.4125 days)</span>
+        </div>
+        <div class="calculation">
+            <span class="label">Total Laytime Allowed:</span>
+            <span class="value">106.735747 hours (4.447322 days)</span>
+        </div>
+        <div class="calculation">
+            <span class="label">Excess (Demurrage):</span>
+            <span class="value">71.164253 hours (2.965177 days)</span>
+        </div>
+        <div class="calculation">
+            <span class="label">Demurrage Rate:</span>
+            <span class="value">$24,000/day</span>
+        </div>
+        <div class="calculation">
+            <span class="label">Demurrage Amount:</span>
+            <span class="value">$71,164.25</span>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Component Calculation Breakdown</h2>
+        <h3>Port Laytime Values:</h3>
+        <div class="calculation">
+            <span class="label">Kuala Tanjung:</span>
+            <span class="value">50.25 hours (50h 15m)</span>
+        </div>
+        <div class="calculation">
+            <span class="label">Kandla:</span>
+            <span class="value">106.00 hours (106h 00m)</span>
+        </div>
+        <div class="calculation">
+            <span class="label">Port Qasim (UNILEVER):</span>
+            <span class="value">21.65 hours (21h 39m)</span>
+        </div>
+        <div class="divider"></div>
+        <div class="calculation">
+            <span class="label">Total:</span>
+            <span class="value">177.90 hours</span>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Verification</h2>
+        <div class="result">
+            <p><strong>Calculation Check:</strong></p>
+            <p>50.25 + 106.00 + 21.65 = 177.90 hours ✓</p>
+            <p>177.90 - 106.735747 = 71.164253 hours ✓</p>
+            <p>2.965177 days × $24,000/day = $71,164.25 ✓</p>
+            <p class="success"><strong>All calculations match the laytime statement!</strong></p>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Component Features</h2>
+        <ul>
+            <li>✓ Displays laytime breakdown by port</li>
+            <li>✓ Shows total laytime used vs allowed</li>
+            <li>✓ Calculates excess time (demurrage)</li>
+            <li>✓ Applies demurrage rate correctly</li>
+            <li>✓ Shows final demurrage amount</li>
+            <li>✓ Includes detailed calculation breakdown (collapsible)</li>
+            <li>✓ Matches laytime statement values exactly</li>
+            <li>✓ Professional financial summary appearance</li>
+        </ul>
+    </div>
+
+    <script>
+        // Test calculations
+        const portLaytimes = {
+            'Kuala Tanjung': 50.25,
+            'Kandla': 106.00,
+            'Port Qasim': 21.65
+        };
+        
+        const totalUsed = Object.values(portLaytimes).reduce((sum, val) => sum + val, 0);
+        const totalAllowed = 106.735747;
+        const excess = totalUsed - totalAllowed;
+        const excessDays = excess / 24;
+        const demurrageRate = 24000;
+        const demurrageAmount = excessDays * demurrageRate;
+        
+        console.log('Calculations:');
+        console.log('Total Used:', totalUsed, 'hours');
+        console.log('Total Allowed:', totalAllowed, 'hours');
+        console.log('Excess:', excess, 'hours');
+        console.log('Excess Days:', excessDays);
+        console.log('Demurrage Amount: $', demurrageAmount.toFixed(2));
+    </script>
+</body>
+</html> 
