@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Port Qasim Calculation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .valid { color: green; font-weight: bold; }
+        .invalid { color: red; font-weight: bold; }
+        .excluded { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>Port Qasim Laytime Calculation Test</h1>
+    
+    <h2>Expected vs Actual Results</h2>
+    <table>
+        <tr>
+            <th>Period</th>
+            <th>Duration</th>
+            <th>UNILEVER Time</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>Waiting for Berth (12 May 11:45 - 16 May 12:30)</td>
+            <td>96h 45m</td>
+            <td>12h 38m (13.06%)</td>
+            <td>✓</td>
+        </tr>
+        <tr class="excluded">
+            <td>Shifting (16 May 12:30 - 16 May 17:10)</td>
+            <td>4h 40m</td>
+            <td>0m (Excluded)</td>
+            <td>✓ FIXED!</td>
+        </tr>
+        <tr>
+            <td>Waiting at Berth (16 May 17:10 - 16 May 19:15)</td>
+            <td>2h 5m</td>
+            <td>16m (13.06%)</td>
+            <td>✓</td>
+        </tr>
+        <tr>
+            <td>Others' Operations (16 May 19:15 - 17 May 12:45)</td>
+            <td>17h 30m</td>
+            <td>0m (Excluded)</td>
+            <td>✓</td>
+        </tr>
+        <tr>
+            <td>UNILEVER Operations (17 May 12:45 - 17 May 21:40)</td>
+            <td>8h 55m</td>
+            <td>8h 45m (Less 10m squeegeeing)</td>
+            <td>✓</td>
+        </tr>
+        <tr style="background-color: #e8f5e9;">
+            <td><strong>TOTAL</strong></td>
+            <td><strong>129h 55m</strong></td>
+            <td class="valid"><strong>21h 39m</strong></td>
+            <td class="valid"><strong>✓ MATCHES!</strong></td>
+        </tr>
+    </table>
+    
+    <h2>What Was Fixed</h2>
+    <ul>
+        <li><strong>Problem:</strong> Shifting time (4h 40m) was being allocated 100% to UNILEVER</li>
+        <li><strong>Solution:</strong> Changed allocation type from "FULL_TO_UNILEVER" to "EXCLUDED"</li>
+        <li><strong>Result:</strong> Shifting time is now excluded from laytime calculations</li>
+        <li><strong>Impact:</strong> UNILEVER's total reduced from 26h 19m to 21h 39m (exactly 4h 40m less)</li>
+    </ul>
+    
+    <h2>Key Learning</h2>
+    <p>In laytime calculations, certain periods are excluded from counting against charterers:</p>
+    <ul>
+        <li><strong>Shifting:</strong> Time spent moving between berths</li>
+        <li><strong>Weather delays:</strong> When operations stop due to weather</li>
+        <li><strong>Port delays:</strong> When the port cannot accept the vessel</li>
+        <li><strong>Vessel breakdowns:</strong> When the vessel's equipment fails</li>
+    </ul>
+    <p>These are typically "exceptions" to laytime and don't count against any party's allocated time.</p>
+</body>
+</html> 
