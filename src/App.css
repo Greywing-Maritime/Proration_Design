@@ -413,7 +413,7 @@
 /* Station Labels */
 .station-label {
   fill: #202124;
-  font-size: 16px;
+  font-size: 11px;
   font-weight: 500;
   text-anchor: start;
   dominant-baseline: auto;
@@ -429,7 +429,7 @@
 
 .station-time {
   fill: #5F6368;
-  font-size: 13px;
+  font-size: 9px;
   font-weight: 400;
   text-anchor: start;
   dominant-baseline: auto;
@@ -440,21 +440,21 @@
 /* Responsive font sizes for better readability on smaller screens */
 @media (max-width: 1200px) {
   .station-label {
-    font-size: 15px;
+    font-size: 10px;
   }
   
   .station-time {
-    font-size: 12px;
+    font-size: 8px;
   }
 }
 
 @media (max-width: 768px) {
   .station-label {
-    font-size: 13px;
+    font-size: 9px;
   }
   
   .station-time {
-    font-size: 11px;
+    font-size: 7px;
   }
 }
 

@@ -105,7 +105,7 @@ const DemurrageSummary = ({ portOperations, timeTracking }) => {
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <h3>
-          Voyage Demurrage Summary
+          Demurrage Summary
         </h3>
         <div className="header-right">
           <span className="demurrage-preview">
