@@ -90,7 +90,7 @@ const TubeMapVisualization = ({
             estimatedLines = Math.max(estimatedLines, 3);
           }
           
-          const lineHeight = 16; // Height per line of text
+          const lineHeight = 21; // Updated from 16 to 21 (33% increase)
           const textBlockHeight = estimatedLines * lineHeight;
           
           // Base spacing components
@@ -801,8 +801,8 @@ const TubeMapVisualization = ({
           let currentLine = '';
           
           // More accurate character width calculation based on font size
-          const fontSize = 12;
-          const avgCharWidth = fontSize * 0.55; // Slightly reduced for better accuracy
+          const fontSize = 16; // Updated from 12 to 16 (33% increase)
+          const avgCharWidth = fontSize * 0.55;
           
           words.forEach(word => {
             const testLine = currentLine ? `${currentLine} ${word}` : word;
@@ -893,9 +893,9 @@ const TubeMapVisualization = ({
           }
           
           // Calculate text bounds
-          const fontSize = 12;
+          const fontSize = 16; // Updated from 12 to 16 (33% increase)
           const avgCharWidth = fontSize * 0.55;
-          const lineHeight = 16;
+          const lineHeight = 21; // Updated from 16 to 21 (33% increase)
           const textStartY = event.y - 8; // Text baseline position
           
           // Check if text would intersect with any cargo lines
@@ -1063,7 +1063,7 @@ const TubeMapVisualization = ({
         const wrappedText = dynamicWrapText(eventTextWithCargoHold, event, textX, textAnchor, maxTextWidth);
         
         // Calculate vertical offset for multi-line text
-        const lineHeight = 16; // Increased line height for better readability
+        const lineHeight = 21; // Updated from 16 to 21 (33% increase)
         const textBlockHeight = wrappedText.length * lineHeight;
         
         // Position text to avoid overlapping with station circle
