@@ -5,7 +5,7 @@
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 16px 0;
+  margin: 0;
   overflow: hidden;
   border: 1px solid #e1e8ed;
   width: 100%; /* Match parent width */
@@ -16,7 +16,7 @@
 .summary-header {
   background: #4285F4;
   color: white;
-  padding: 10px 12px;
+  padding: 7px 9px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -31,13 +31,14 @@
 
 .summary-header h3 {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 4px;
   flex: 1;
   min-width: 0; /* Allow text to shrink */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .header-icon {
@@ -60,8 +61,14 @@
 }
 
 .toggle-icon {
-  font-size: 0.7rem;
+  font-size: 1rem;
   transition: transform 0.3s ease;
+  transform: rotate(0deg);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-icon.collapsed {
+  transform: rotate(0deg);
 }
 
 /* Content */
@@ -349,15 +356,10 @@
   flex-shrink: 0;
 }
 
-/* Ensure proper spacing in sidebar */
-.right-sidebar .demurrage-summary {
-  margin: 16px 0;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .demurrage-summary {
-    margin: 8px 0;
+    margin: 0;
     min-width: 260px;
   }
 

@@ -341,7 +341,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '15px 20px',
+          padding: '7px 9px',
           cursor: 'pointer',
           background: 'linear-gradient(135deg, #4285F4 0%, #1A73E8 100%)',
           borderRadius: isExpanded ? '12px 12px 0 0' : '12px',
@@ -352,7 +352,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
         }}
       >
         <h3 style={{ 
-          fontSize: '1.2rem',
+          fontSize: '0.9rem',
           fontWeight: '600', 
           color: 'white',
           margin: 0,

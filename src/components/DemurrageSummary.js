@@ -108,11 +108,8 @@ const DemurrageSummary = ({ portOperations, timeTracking }) => {
           Demurrage Summary
         </h3>
         <div className="header-right">
-          <span className="demurrage-preview">
-            ${calculation.demurrageAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </span>
-          <span className="toggle-icon">
-            {isExpanded ? '▼' : '▶'}
+          <span className={`toggle-icon ${!isExpanded ? 'collapsed' : ''}`}>
+            ▼
           </span>
         </div>
       </div>

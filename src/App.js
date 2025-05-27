@@ -151,6 +151,12 @@ function App() {
           <div 
             className={`right-sidebar ${controlModalExpanded || timeTrackingExpanded || demurrageSummaryExpanded ? 'has-expanded-content' : 'compact'}`}
           >
+            {/* Demurrage Summary Panel */}
+            <DemurrageSummary
+              portOperations={portOperations}
+              timeTracking={timeTracking}
+            />
+
             {/* Collapsible Control Settings Panel */}
             <CollapsibleControlModal
               ports={ports}
@@ -176,12 +182,6 @@ function App() {
               cargoTypes={cargoTypes}
               isExpanded={timeTrackingExpanded}
               onExpandedChange={setTimeTrackingExpanded}
-            />
-
-            {/* Demurrage Summary Panel */}
-            <DemurrageSummary
-              portOperations={portOperations}
-              timeTracking={timeTracking}
             />
           </div>
         </div>

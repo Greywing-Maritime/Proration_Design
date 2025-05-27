@@ -50,7 +50,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s ease;
   /* Dynamic height - wrap content exactly */
@@ -68,7 +68,7 @@
   /* Let content determine height naturally */
   height: fit-content;
   min-height: auto;
-  gap: 8px; /* Reduced from 16px for tighter packing */
+  gap: 12px; /* Consistent with expanded state */
 }
 
 /* Reduce padding and font for Control Settings header when in compact sidebar */
@@ -413,7 +413,7 @@
 /* Station Labels */
 .station-label {
   fill: #202124;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 500;
   text-anchor: start;
   dominant-baseline: auto;
@@ -429,7 +429,7 @@
 
 .station-time {
   fill: #5F6368;
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 400;
   text-anchor: start;
   dominant-baseline: auto;
@@ -440,21 +440,21 @@
 /* Responsive font sizes for better readability on smaller screens */
 @media (max-width: 1200px) {
   .station-label {
-    font-size: 10px;
+    font-size: 15px;
   }
   
   .station-time {
-    font-size: 8px;
+    font-size: 12px;
   }
 }
 
 @media (max-width: 768px) {
   .station-label {
-    font-size: 9px;
+    font-size: 13px;
   }
   
   .station-time {
-    font-size: 7px;
+    font-size: 11px;
   }
 }
 
