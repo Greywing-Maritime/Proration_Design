@@ -1,69 +1,69 @@
 // Style Guide for Proration Design System
-// Based on the professional blue/gray color scheme
+// Based on the clean, modern interface color scheme
 // This file contains all color definitions, typography, spacing, and component styles
 
 export const colors = {
-  // Primary Colors - Professional Blue/Gray Palette
+  // Primary Colors - Clean Modern Interface
   primary: {
-    blue: '#4A90E2',        // Primary blue (from screenshots)
-    darkBlue: '#2C5282',    // Darker blue for headers
-    lightBlue: '#E6F2FF',   // Light blue for backgrounds
-    skyBlue: '#87CEEB',     // Sky blue for accents
+    blue: '#4285F4',        // Primary blue (Google-style)
+    darkBlue: '#1A73E8',    // Darker blue for headers
+    lightBlue: '#E8F0FE',   // Light blue for backgrounds
+    hoverBlue: '#3367D6',   // Hover state blue
   },
   
-  // Neutral Colors - Grays
+  // Neutral Colors - Clean grays
   neutral: {
     white: '#FFFFFF',
-    offWhite: '#F8F9FA',    // Slight off-white for backgrounds
-    lightGray: '#F5F6FA',   // Very light gray (sidebar background)
-    gray100: '#E8E9ED',     // Light gray borders
-    gray200: '#D1D3D9',     // Medium light gray
-    gray300: '#B8BBC3',     // Medium gray
-    gray400: '#9EA2AD',     // Text gray
-    gray500: '#6C7280',     // Dark gray text
-    gray600: '#4B5563',     // Darker gray
-    gray700: '#374151',     // Very dark gray
-    gray800: '#1F2937',     // Almost black
+    offWhite: '#F8F9FA',    // Main background
+    lightGray: '#F1F3F4',   // Subtle background variations
+    gray100: '#E8EAED',     // Light borders
+    gray200: '#DADCE0',     // Medium light borders
+    gray300: '#BDC1C6',     // Medium gray
+    gray400: '#9AA0A6',     // Secondary text
+    gray500: '#5F6368',     // Primary text light
+    gray600: '#3C4043',     // Primary text medium
+    gray700: '#202124',     // Primary text dark
+    gray800: '#1A1A1A',     // Almost black
     black: '#000000',
   },
   
-  // Status Colors
+  // Status Colors - Modern interface style
   status: {
-    success: '#10B981',     // Green for success/processed
-    warning: '#F59E0B',     // Orange for warnings
-    error: '#EF4444',       // Red for errors
-    info: '#3B82F6',        // Blue for information
+    success: '#34A853',     // Green for success
+    warning: '#FBBC04',     // Yellow for warnings
+    error: '#EA4335',       // Red for errors
+    info: '#4285F4',        // Blue for information
   },
   
-  // Operational Colors (for cargo operations)
+  // Operational Colors - Soft, muted versions
   operations: {
-    loading: '#FF9800',     // Orange for loading
-    discharging: '#2196F3', // Blue for discharging
-    waiting: '#9C27B0',     // Purple for waiting
-    laytime: '#4CAF50',     // Green for laytime
-    demurrage: '#F44336',   // Red for demurrage
+    loading: '#F9AB00',     // Softer orange for loading
+    discharging: '#4285F4', // Primary blue for discharging
+    waiting: '#8E24AA',     // Softer purple for waiting
+    laytime: '#34A853',     // Success green for laytime
+    demurrage: '#EA4335',   // Error red for demurrage
   },
   
-  // Port Theme Colors (maintaining existing functionality)
+  // Port Theme Colors - Updated to match new scheme
   portThemes: {
-    kualaTanjung: '#E91E63', // Pink
-    kandla: '#9C27B0',       // Purple
-    portQasim: '#2196F3',    // Blue
+    kualaTanjung: '#4285F4', // Primary blue
+    kandla: '#1A73E8',       // Primary blue dark
+    portQasim: '#34A853',    // Success green
   },
   
-  // Background Gradients
+  // Background Gradients - Clean, subtle
   gradients: {
-    main: 'linear-gradient(135deg, #F5F6FA 0%, #E8E9ED 100%)', // Subtle gray gradient
-    header: 'linear-gradient(135deg, #4A90E2 0%, #2C5282 100%)', // Blue gradient
+    main: 'linear-gradient(135deg, #F8F9FA 0%, #F1F3F4 100%)', // Subtle gray gradient
+    header: 'linear-gradient(135deg, #4285F4 0%, #1A73E8 100%)', // Blue gradient
     card: 'linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%)',   // White to off-white
   },
   
-  // Shadows
+  // Shadows - Modern, subtle
   shadows: {
-    small: '0 2px 4px rgba(0, 0, 0, 0.06)',
-    medium: '0 4px 16px rgba(0, 0, 0, 0.08)',
-    large: '0 8px 32px rgba(0, 0, 0, 0.12)',
-    hover: '0 6px 20px rgba(0, 0, 0, 0.15)',
+    small: '0 1px 2px rgba(0, 0, 0, 0.1)',
+    medium: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+    large: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    hover: '0 2px 4px rgba(0, 0, 0, 0.15)',
   },
 };
 
@@ -179,10 +179,10 @@ const styleGuide = {
   modalTextColor: colors.neutral.gray800, // Text color for modal content
   borderColor: colors.neutral.gray500, // Border color for elements within the modal
   statusColors: {
-    success: '#10B981',     // Green for success/processed
-    warning: '#F59E0B',     // Orange for warnings
-    error: '#EF4444',       // Red for errors
-    info: '#3B82F6',        // Blue for information
+    success: '#34A853',     // Green for success
+    warning: '#FBBC04',     // Yellow for warnings
+    error: '#EA4335',       // Red for errors
+    info: '#4285F4',        // Blue for information
   },
 };
 

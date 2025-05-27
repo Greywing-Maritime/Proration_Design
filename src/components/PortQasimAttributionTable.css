@@ -17,11 +17,11 @@
 .attribution-title {
   font-size: 14px;
   font-weight: 700;
-  color: #2c3e50;
+  color: #202124;
   margin-bottom: 16px;
   text-align: center;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid #2196f3;
+  border-bottom: 2px solid #4285F4;
   padding-bottom: 8px;
 }
 
@@ -99,7 +99,7 @@
 .unilever-cell {
   text-align: right;
   font-weight: 600;
-  color: #e32017;
+  color: #4285F4;
   min-width: 80px;
 }
 
@@ -107,7 +107,7 @@
 .others-cell {
   text-align: right;
   font-weight: 600;
-  color: #00782a;
+  color: #34A853;
   min-width: 80px;
 }
 
@@ -131,12 +131,12 @@
 }
 
 .totals-row .unilever-cell {
-  color: #e32017;
+  color: #4285F4;
   font-size: 14px;
 }
 
 .totals-row .others-cell {
-  color: #00782a;
+  color: #34A853;
   font-size: 14px;
 }
 
@@ -195,4 +195,23 @@
   .attribution-table td {
     padding: 6px 4px;
   }
+}
+
+.attribution-table-header {
+  background: #F8F9FA;
+  border-bottom: 2px solid #4285F4;
+  padding: 12px;
+  font-weight: 600;
+  color: #202124;
+  text-align: center;
+}
+
+.unilever-cargo {
+  color: #4285F4;
+  font-weight: 600;
+}
+
+.unilever-total {
+  color: #4285F4;
+  font-weight: 700;
 } 

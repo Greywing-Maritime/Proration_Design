@@ -81,14 +81,14 @@ const CollapsibleControlModal = ({
               </button>
               <button
                 className={activeCharterer === 'UNILEVER' ? 'btn active' : 'btn'}
-                style={{ background: activeCharterer === 'UNILEVER' ? '#e32017' : '#0019a8' }}
+                style={{ background: activeCharterer === 'UNILEVER' ? '#1A73E8' : '#4285F4' }}
                 onClick={() => onChartererFilter('UNILEVER')}
               >
                 UNILEVER
               </button>
               <button
                 className={activeCharterer === 'OTHER' ? 'btn active' : 'btn'}
-                style={{ background: activeCharterer === 'OTHER' ? '#e32017' : '#00782a' }}
+                style={{ background: activeCharterer === 'OTHER' ? '#1A73E8' : '#34A853' }}
                 onClick={() => onChartererFilter('OTHER')}
               >
                 OTHER
@@ -110,7 +110,7 @@ const CollapsibleControlModal = ({
                 className={greyOutNonUnilever ? 'btn active' : 'btn'}
                 onClick={onToggleGreyOutNonUnilever}
                 style={{ 
-                  background: greyOutNonUnilever ? '#e32017' : '#0019a8',
+                  background: greyOutNonUnilever ? '#1A73E8' : '#4285F4',
                   color: 'white'
                 }}
               >
@@ -132,7 +132,7 @@ const CollapsibleControlModal = ({
               <button
                 className={focusTimeType === 'waiting' ? 'btn active' : 'btn'}
                 style={{ 
-                  background: focusTimeType === 'waiting' ? '#e32017' : '#f39c12',
+                  background: focusTimeType === 'waiting' ? '#1A73E8' : '#F9AB00',
                   color: 'white'
                 }}
                 onClick={() => onTimeTypeFocus('waiting')}
@@ -142,7 +142,7 @@ const CollapsibleControlModal = ({
               <button
                 className={focusTimeType === 'laytime' ? 'btn active' : 'btn'}
                 style={{ 
-                  background: focusTimeType === 'laytime' ? '#e32017' : '#2ecc71',
+                  background: focusTimeType === 'laytime' ? '#1A73E8' : '#34A853',
                   color: 'white'
                 }}
                 onClick={() => onTimeTypeFocus('laytime')}
@@ -152,7 +152,7 @@ const CollapsibleControlModal = ({
               <button
                 className={focusTimeType === 'deduction' ? 'btn active' : 'btn'}
                 style={{ 
-                  background: focusTimeType === 'deduction' ? '#e32017' : '#e74c3c',
+                  background: focusTimeType === 'deduction' ? '#1A73E8' : '#EA4335',
                   color: 'white'
                 }}
                 onClick={() => onTimeTypeFocus('deduction')}

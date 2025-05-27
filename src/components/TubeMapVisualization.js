@@ -539,7 +539,7 @@ const TubeMapVisualization = ({
       .attr('height', 4);
     waitingPattern.append('path')
       .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
-      .attr('stroke', '#f39c12')
+      .attr('stroke', '#F9AB00')
       .attr('stroke-width', 1);
 
     // Deduction pattern
@@ -550,7 +550,7 @@ const TubeMapVisualization = ({
       .attr('height', 4);
     deductionPattern.append('path')
       .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
-      .attr('stroke', '#e74c3c')
+      .attr('stroke', '#EA4335')
       .attr('stroke-width', 1);
 
     // Render each port
@@ -586,7 +586,7 @@ const TubeMapVisualization = ({
             .attr('class', 'operation-label')
             .style('font-size', '12px')
             .style('font-weight', '600')
-            .style('fill', '#ff6600')
+            .style('fill', '#F9AB00')
             .style('text-anchor', 'middle')
             .text('← LOADING');
         }
@@ -598,7 +598,7 @@ const TubeMapVisualization = ({
             .attr('class', 'operation-label')
             .style('font-size', '12px')
             .style('font-weight', '600')
-            .style('fill', '#2196f3')
+            .style('fill', '#4285F4')
             .style('text-anchor', 'middle')
             .text('DISCHARGING →');
         }
@@ -709,8 +709,8 @@ const TubeMapVisualization = ({
             .attr('cx', event.centerX)
             .attr('cy', event.y)
             .attr('r', 12)
-            .attr('fill', 'rgba(52, 73, 94, 0.8)')
-            .attr('stroke', '#2c3e50')
+            .attr('fill', '#9AA0A6') // Updated to neutral gray
+            .attr('stroke', '#5F6368') // Updated to secondary text color
             .attr('stroke-width', 2);
           
           // Add central spine indicator
@@ -744,7 +744,7 @@ const TubeMapVisualization = ({
           if (cargoInfo && position && position.isInOperations) {
             // Add a small label showing the charterer
             const chartererLabel = cargoInfo.charterer === 'UNILEVER' ? 'UNILEVER' : 'OTHER';
-            const labelBgColor = cargoInfo.charterer === 'UNILEVER' ? '#e91e63' : '#666';
+            const labelBgColor = cargoInfo.charterer === 'UNILEVER' ? '#4285F4' : '#9AA0A6';
             
             // Position the label above the cargo line
             const labelGroup = stationGroup.append('g')
@@ -1103,7 +1103,7 @@ const TubeMapVisualization = ({
             .attr('x', textX)
             .attr('y', textStartY + textBlockHeight + (showTimestamps ? 24 : 10))
             .style('font-weight', '600')
-            .style('fill', '#3498db')
+            .style('fill', '#4285F4')
             .style('text-anchor', textAnchor)
             .text(`(${event.duration})`);
         }

@@ -512,7 +512,7 @@ function CargoStatusModal({
             {distinctUnileverCargoCount} {compressionLevel >= 3 ? 'C' : 'Cargoes'}
           </div>
           {activePort && activePort !== 'all' && (
-            <div className="info-badge port-focus-badge" style={{ background: '#3498db' }}>
+            <div className="info-badge port-focus-badge" style={{ background: '#4285F4' }}>
               📍 {activePort}
             </div>
           )}
@@ -567,7 +567,7 @@ function CargoStatusModal({
                     className="laytime-bar-fill allowed"
                       style={{ 
                         width: `${(laytimeData.allowed / Math.max(laytimeData.used, laytimeData.allowed)) * 100}%`,
-                        backgroundColor: '#27ae60' // Green for allowed
+                        backgroundColor: '#34A853' // Updated green for allowed
                       }}
                   />
                 </div>
@@ -581,7 +581,7 @@ function CargoStatusModal({
                     className="laytime-bar-fill used"
                     style={{ 
                       width: `${Math.min(100, (laytimeData.used / Math.max(laytimeData.used, laytimeData.allowed)) * 100)}%`,
-                        backgroundColor: '#3498db' // Blue for used
+                        backgroundColor: '#4285F4' // Updated blue for used
                     }}
                   />
                 </div>
@@ -596,7 +596,7 @@ function CargoStatusModal({
                       className="laytime-bar-fill demurrage"
                       style={{ 
                         width: `${(laytimeData.demurrage / Math.max(laytimeData.used, laytimeData.allowed)) * 100}%`,
-                          backgroundColor: '#e74c3c' // Red for demurrage
+                          backgroundColor: '#EA4335' // Updated red for demurrage
                       }}
                     />
                   </div>

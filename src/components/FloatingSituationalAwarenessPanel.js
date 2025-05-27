@@ -260,18 +260,6 @@ const FloatingSituationalAwarenessPanel = ({
   const operationType = isLoading ? 'Loading' : 'Discharging';
   const laytimeBasis = getLaytimeBasis(); // Get the laytime basis
   
-  // Expected values for validation (from laytime statement)
-  const expectedLaytimeInMinutes = {
-    'Kuala Tanjung': 50.25 * 60, // 3015 minutes (50h 15m)
-    'Kandla': 106 * 60,         // 6360 minutes (106h 00m)
-    'Port Qasim': 21.65 * 60    // 1299 minutes (21h 39m)
-  };
-  
-  const calculatedNetLaytime = timeStats.laytime - timeStats.deductions;
-  const expectedNetLaytime = expectedLaytimeInMinutes[port] || 0;
-  // Allow a small tolerance for rounding (e.g., 1 minute)
-  const isVerified = Math.abs(calculatedNetLaytime - expectedNetLaytime) <= 1;
-
   // Extract key events from timeline
   const getKeyEvents = () => {
     const keyEvents = [];
@@ -485,46 +473,6 @@ const FloatingSituationalAwarenessPanel = ({
                 </div>
               </div>
             )}
-
-            {/* Validation Status */}
-            <div className="validation-status">
-              <h6>Validation Status</h6>
-              <div className="validation-item">
-                <span>Expected:</span>
-                <span>{formatMinutes(expectedNetLaytime)}</span>
-              </div>
-              <div className="validation-item">
-                <span>Calculated:</span>
-                <span>{formatMinutes(calculatedNetLaytime)}</span>
-              </div>
-              <div className="validation-item status">
-                <span>Status:</span>
-                <span className={isVerified ? 'verified' : 'mismatch'}>
-                  {isVerified ? '✓ VERIFIED' : '⚠ MISMATCH'}
-                </span>
-              </div>
-            </div>
-            
-            {/* Proration info */}
-            <div className="proration-info">
-              <h6>Proration by Volume:</h6>
-              <div className="calc-row">
-                <span>UNILEVER ({proration.unileverVolume}):</span>
-                <span>{proration.unilever}</span>
-              </div>
-              {(otherCargoes.length > 0 || port === 'Port Qasim') && (
-                <div className="calc-row">
-                  <span>OTHER ({proration.otherVolume}):</span>
-                  <span>{proration.other}</span>
-                </div>
-              )}
-              {port === 'Port Qasim' && (
-                <div className="calc-row total">
-                  <span>Total Volume:</span>
-                  <span>{proration.totalVolume}</span>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Cargo Details Section */}
@@ -569,10 +517,10 @@ const FloatingSituationalAwarenessPanel = ({
                   {port === 'Port Qasim' ? (
                     <>
                       {[ // Array of Port Qasim other cargoes for mapping
-                        { name: 'Palm Stearin (4S)', quantity: '4200', color: '#00782a' },
-                        { name: 'Soft Stearin (6S)', quantity: '5600', color: '#2196f3' },
-                        { name: 'Palm Olein (8W)', quantity: '4500', color: '#ff6600' },
-                        { name: 'Palm Oil (9W)', quantity: '5701', color: '#ffd320' },
+                        { name: 'Palm Stearin (4S)', quantity: '4200', color: '#34A853' },
+                        { name: 'Soft Stearin (6S)', quantity: '5600', color: '#9AA0A6' },
+                        { name: 'Palm Olein (8W)', quantity: '4500', color: '#FBBC04' },
+                        { name: 'Palm Oil (9W)', quantity: '5701', color: '#5F6368' },
                       ].map((cargo, index) => {
                         const cargoVolNum = parseFloat(String(cargo.quantity).replace(/,/g, '').replace(/\s*MT/i, '')) || 0;
                         const percentage = proration.totalVolumeNum > 0 ? (cargoVolNum / proration.totalVolumeNum) * 100 : 0;
@@ -703,6 +651,27 @@ const FloatingSituationalAwarenessPanel = ({
                     </div>
                   );
                 })()}
+              </div>
+            )}
+          </div>
+
+          {/* Proration info */}
+          <div className="proration-info">
+            <h6>Proration by Volume:</h6>
+            <div className="calc-row">
+              <span>UNILEVER ({proration.unileverVolume}):</span>
+              <span>{proration.unilever}</span>
+            </div>
+            {(otherCargoes.length > 0 || port === 'Port Qasim') && (
+              <div className="calc-row">
+                <span>OTHER ({proration.otherVolume}):</span>
+                <span>{proration.other}</span>
+              </div>
+            )}
+            {port === 'Port Qasim' && (
+              <div className="calc-row total">
+                <span>Total Volume:</span>
+                <span>{proration.totalVolume}</span>
               </div>
             )}
           </div>

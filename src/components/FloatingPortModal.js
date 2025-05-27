@@ -21,6 +21,37 @@ const FloatingPortModal = ({
   const [positionMode, setPositionMode] = useState('absolute'); // 'fixed' or 'absolute'
   const modalRef = useRef(null);
 
+  // Function to ensure page can scroll past floating modals
+  const ensureScrollableHeight = () => {
+    const allFloatingModals = document.querySelectorAll('.floating-port-modal');
+    let maxBottomPosition = 0;
+    
+    allFloatingModals.forEach(modal => {
+      const rect = modal.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const modalBottom = rect.top + scrollTop + rect.height;
+      maxBottomPosition = Math.max(maxBottomPosition, modalBottom);
+    });
+    
+    // Add extra padding to ensure comfortable scrolling past the modals
+    const extraPadding = 200;
+    const requiredHeight = maxBottomPosition + extraPadding;
+    
+    // Get the current document height
+    const currentDocHeight = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+    
+    // Only update if we need more height
+    if (requiredHeight > currentDocHeight) {
+      document.body.style.minHeight = `${requiredHeight}px`;
+    }
+  };
+
   // Position modal to align with its port section
   useEffect(() => {
     const updatePosition = () => {
@@ -36,6 +67,8 @@ const FloatingPortModal = ({
           left: visualizationArea ? visualizationArea.offsetWidth + 16 : window.innerWidth - 400
         });
         setPositionMode('absolute');
+        // Ensure scrollable height after positioning
+        setTimeout(ensureScrollableHeight, 100);
         return;
       }
       
@@ -142,6 +175,9 @@ const FloatingPortModal = ({
           setPosition({ top: alignmentTop, left: leftPosition });
         }
       }
+      
+      // Ensure scrollable height after positioning
+      setTimeout(ensureScrollableHeight, 100);
     };
 
     setTimeout(updatePosition, 100);
@@ -157,6 +193,17 @@ const FloatingPortModal = ({
       clearInterval(intervalId);
     };
   }, [port, isVisible]);
+
+  // Cleanup minimum height when component unmounts
+  useEffect(() => {
+    return () => {
+      // Reset body min-height when all modals are unmounted
+      const remainingModals = document.querySelectorAll('.floating-port-modal');
+      if (remainingModals.length === 0) {
+        document.body.style.minHeight = '';
+      }
+    };
+  }, []);
 
   if (!isVisible) return null;
 

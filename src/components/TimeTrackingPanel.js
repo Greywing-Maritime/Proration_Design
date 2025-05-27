@@ -120,9 +120,9 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
         <h4 style={{ 
           fontSize: '14px', 
           fontWeight: '600', 
-          color: '#2c3e50',
+          color: '#202124',
           marginBottom: '12px',
-          borderBottom: '1px solid #e1e8ed',
+          borderBottom: '1px solid #E8EAED',
           paddingBottom: '6px'
         }}>
           {isAllPorts ? 'Voyage-Wide Cargo Time Allocation' : 'Cargo Time Allocation'}
@@ -150,16 +150,16 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
                 <span style={{ 
                   fontSize: '13px', 
                   fontWeight: '600',
-                  color: '#2c3e50'
+                  color: '#202124'
                 }}>
                   {cargoId}: {cargoInfo.name}
                 </span>
                 <span style={{ 
                   fontSize: '11px', 
-                  color: '#7f8c8d',
+                  color: '#9AA0A6',
                   marginLeft: '8px',
                   padding: '2px 6px',
-                  background: cargoInfo.charterer === 'UNILEVER' ? '#e8f5e8' : '#f0f8ff',
+                  background: cargoInfo.charterer === 'UNILEVER' ? '#E8F0FE' : '#F1F3F4',
                   borderRadius: '10px'
                 }}>
                   {cargoInfo.charterer}
@@ -169,7 +169,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
                 {isAllPorts && data.ports && (
                   <span style={{ 
                     fontSize: '10px', 
-                    color: '#95a5a6',
+                    color: '#9AA0A6',
                     marginLeft: '8px',
                     fontStyle: 'italic'
                   }}>
@@ -181,7 +181,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
               <div className="time-stats">
                 <div className="stat-row">
                   <span className="stat-label">Laytime:</span>
-                  <span className="stat-value" style={{ color: '#2ecc71' }}>
+                  <span className="stat-value" style={{ color: '#34A853' }}>
                     {formatTime(data.laytime)}
                   </span>
                   <span className="stat-percentage">
@@ -191,14 +191,14 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
                 
                 <div className="stat-row">
                   <span className="stat-label">Waiting:</span>
-                  <span className="stat-value" style={{ color: '#f39c12' }}>
+                  <span className="stat-value" style={{ color: '#F9AB00' }}>
                     {formatTime(data.waiting)}
                   </span>
                 </div>
                 
                 <div className="stat-row">
                   <span className="stat-label">Deductions:</span>
-                  <span className="stat-value" style={{ color: '#e74c3c' }}>
+                  <span className="stat-value" style={{ color: '#EA4335' }}>
                     {formatTime(data.deductions)}
                   </span>
                 </div>
@@ -232,9 +232,9 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
         <h4 style={{ 
           fontSize: '14px', 
           fontWeight: '600', 
-          color: '#2c3e50',
+          color: '#202124',
           marginBottom: '12px',
-          borderBottom: '1px solid #e1e8ed',
+          borderBottom: '1px solid #E8EAED',
           paddingBottom: '6px'
         }}>
           Charterer Distribution
@@ -244,7 +244,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
           <div style={{ marginBottom: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '12px', fontWeight: '500' }}>UNILEVER</span>
-              <span style={{ fontSize: '12px', fontWeight: '600', color: '#e32017' }}>
+              <span style={{ fontSize: '12px', fontWeight: '600', color: '#4285F4' }}>
                 {unileverPercent.toFixed(1)}%
               </span>
             </div>
@@ -253,7 +253,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
                 className="progress-fill"
                 style={{ 
                   width: `${unileverPercent}%`,
-                  backgroundColor: '#e32017'
+                  backgroundColor: '#4285F4'
                 }}
               />
             </div>
@@ -262,7 +262,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '12px', fontWeight: '500' }}>OTHER</span>
-              <span style={{ fontSize: '12px', fontWeight: '600', color: '#00782a' }}>
+              <span style={{ fontSize: '12px', fontWeight: '600', color: '#34A853' }}>
                 {otherPercent.toFixed(1)}%
               </span>
             </div>
@@ -271,7 +271,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
                 className="progress-fill"
                 style={{ 
                   width: `${otherPercent}%`,
-                  backgroundColor: '#00782a'
+                  backgroundColor: '#34A853'
                 }}
               />
             </div>
@@ -289,21 +289,21 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
     return (
       <div style={{ marginBottom: '20px' }}>
         <div style={{ 
-          background: isAllPorts ? '#f0f8ff' : '#f8f9fa',
+          background: isAllPorts ? '#E8F0FE' : '#F8F9FA',
           padding: '12px',
           borderRadius: '8px',
           marginBottom: '16px',
-          border: isAllPorts ? '2px solid #2196f3' : 'none'
+          border: isAllPorts ? '2px solid #4285F4' : 'none'
         }}>
           <div style={{ 
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center' 
           }}>
-            <span style={{ fontSize: '13px', fontWeight: '600', color: '#2c3e50' }}>
+            <span style={{ fontSize: '13px', fontWeight: '600', color: '#202124' }}>
               {isAllPorts ? 'Total Voyage Time:' : 'Total Port Time:'}
             </span>
-            <span style={{ fontSize: '14px', fontWeight: '700', color: '#0019a8' }}>
+            <span style={{ fontSize: '14px', fontWeight: '700', color: '#4285F4' }}>
               {portData.totalTime}
             </span>
           </div>
@@ -311,7 +311,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
             <div style={{ 
               marginTop: '8px',
               fontSize: '11px',
-              color: '#7f8c8d',
+              color: '#5F6368',
               fontStyle: 'italic'
             }}>
               Aggregated across all ports: Kuala Tanjung, Kandla, Port Qasim
@@ -343,7 +343,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
           alignItems: 'center',
           padding: '15px 20px',
           cursor: 'pointer',
-          background: 'linear-gradient(135deg, #4A90E2 0%, #2C5282 100%)',
+          background: 'linear-gradient(135deg, #4285F4 0%, #1A73E8 100%)',
           borderRadius: isExpanded ? '12px 12px 0 0' : '12px',
           transition: 'all 0.3s ease',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
@@ -388,10 +388,10 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
               
               let tabColor;
               if (isAllPorts) {
-                tabColor = '#34495e';
+                tabColor = '#5F6368';
               } else {
-                tabColor = tabName === 'Kuala Tanjung' ? '#e91e63' : 
-                          tabName === 'Kandla' ? '#9c27b0' : '#2196f3';
+                tabColor = tabName === 'Kuala Tanjung' ? '#4285F4' : 
+                          tabName === 'Kandla' ? '#1A73E8' : '#34A853';
               }
               
               return (
@@ -403,7 +403,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
                     padding: '6px 12px',
                     margin: '2px',
                     background: isActive ? tabColor : '#f8f9fa',
-                    color: isActive ? 'white' : '#2c3e50',
+                    color: isActive ? 'white' : '#202124',
                     border: `1px solid ${tabColor}`,
                     borderRadius: '6px',
                     fontWeight: isAllPorts ? '600' : '500',
@@ -438,19 +438,19 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
           <div style={{ 
             marginTop: '24px',
             padding: '12px',
-            background: '#f8f9fa',
+            background: '#F8F9FA',
             borderRadius: '8px',
-            border: '1px solid #e1e8ed'
+            border: '1px solid #E8EAED'
           }}>
             <h4 style={{ 
               fontSize: '13px', 
               fontWeight: '600', 
-              color: '#2c3e50',
+              color: '#202124',
               marginBottom: '8px'
             }}>
               Legend
             </h4>
-            <div style={{ fontSize: '11px', color: '#7f8c8d', lineHeight: '1.5' }}>
+            <div style={{ fontSize: '11px', color: '#9AA0A6', lineHeight: '1.5' }}>
               <div style={{ marginBottom: '8px' }}>
                 <strong>Line Behavior:</strong>
               </div>
@@ -509,7 +509,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
         }
         
         .stat-label {
-          color: #7f8c8d;
+          color: #5F6368;
           font-weight: 500;
         }
         
@@ -518,14 +518,14 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
         }
         
         .stat-percentage {
-          color: #95a5a6;
+          color: #9AA0A6;
           font-size: 10px;
         }
         
         .progress-bar {
           width: 100%;
           height: 4px;
-          background-color: #f1f2f6;
+          background-color: #F1F3F4;
           border-radius: 2px;
           overflow: hidden;
         }
@@ -546,7 +546,7 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
         }
         
         .time-tracking-header:hover {
-          background: linear-gradient(135deg, #2C5282 0%, #1A3A5E 100%); /* Darker blue gradient for hover */
+          background: linear-gradient(135deg, #3367D6 0%, #1557B0 100%); /* Updated hover gradient */
         }
 
         /* Responsive styles for floating panel */

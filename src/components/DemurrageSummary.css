@@ -14,7 +14,7 @@
 
 /* Header */
 .summary-header {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  background: #4285F4;
   color: white;
   padding: 10px 12px;
   cursor: pointer;
@@ -26,7 +26,7 @@
 }
 
 .summary-header:hover {
-  background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+  background: #3367D6;
 }
 
 .summary-header h3 {
@@ -77,10 +77,10 @@
 .port-breakdown h4 {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: #202124;
   margin: 0 0 8px 0;
   padding-bottom: 4px;
-  border-bottom: 1px solid #e1e8ed;
+  border-bottom: 1px solid #E8EAED;
 }
 
 .port-list {
@@ -103,20 +103,20 @@
 .port-name {
   flex: 0 0 auto;
   font-weight: 500;
-  color: #2c3e50;
+  color: #202124;
   width: 90px;
 }
 
 .port-time {
   font-weight: 600;
-  color: #0019a8;
+  color: #4285F4;
   flex: 0 0 auto;
   text-align: right;
   width: 60px;
 }
 
 .port-days {
-  color: #7f8c8d;
+  color: #5F6368;
   flex: 1;
   text-align: right;
   font-size: 0.7rem;
@@ -150,17 +150,17 @@
 }
 
 .calc-row.allowed {
-  color: #27ae60;
+  color: #34A853;
 }
 
 .calc-row.excess {
-  color: #e74c3c;
+  color: #EA4335;
   font-weight: 600;
 }
 
 .calc-label {
   font-size: 0.75rem;
-  color: #2c3e50;
+  color: #202124;
   flex: 1;
   min-width: 0;
 }
@@ -168,7 +168,7 @@
 .calc-value {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #0019a8;
+  color: #4285F4;
   text-align: right;
   flex-shrink: 0;
   display: flex;
@@ -177,19 +177,19 @@
 }
 
 .calc-value.excess-value {
-  color: #e74c3c;
+  color: #EA4335;
 }
 
 .calc-days {
   font-size: 0.65rem;
-  color: #7f8c8d;
+  color: #5F6368;
   font-weight: 400;
   white-space: nowrap;
 }
 
 .calc-divider {
   height: 1px;
-  background: #2c3e50;
+  background: #E8EAED;
   margin: 4px 0;
 }
 
@@ -210,25 +210,25 @@
 
 .rate-label {
   font-size: 0.75rem;
-  color: #2c3e50;
+  color: #202124;
 }
 
 .rate-value {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #0019a8;
+  color: #4285F4;
   flex-shrink: 0;
 }
 
 .final-amount {
-  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  background: #34A853;
   color: white;
   padding: 10px;
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
+  box-shadow: 0 2px 6px rgba(52, 168, 83, 0.3);
   gap: 8px;
 }
 
@@ -246,7 +246,7 @@
 
 /* Details Toggle */
 .details-toggle {
-  background: #3498db;
+  background: #4285F4;
   color: white;
   border: none;
   padding: 6px 10px;
@@ -260,7 +260,7 @@
 }
 
 .details-toggle:hover {
-  background: #2980b9;
+  background: #3367D6;
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -276,7 +276,7 @@
 .detailed-breakdown h4 {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: #202124;
   margin: 0 0 10px 0;
 }
 
@@ -298,23 +298,23 @@
 
 .detail-item.total {
   font-weight: 600;
-  color: #0019a8;
+  color: #4285F4;
 }
 
 .detail-item.excess {
   font-weight: 600;
-  color: #e74c3c;
+  color: #EA4335;
 }
 
 .detail-label {
-  color: #2c3e50;
+  color: #202124;
   flex: 1 1 auto;
   min-width: 0;
   line-height: 1.2;
 }
 
 .detail-value {
-  color: #34495e;
+  color: #5F6368;
   font-family: 'Courier New', monospace;
   font-size: 0.65rem;
   text-align: right;
@@ -325,7 +325,7 @@
 
 .detail-divider {
   height: 1px;
-  background: #bdc3c7;
+  background: #E8EAED;
   margin: 4px 0;
 }
 
