@@ -179,7 +179,7 @@ function App() {
             <TimeTrackingPanel
               timeTracking={timeTracking}
               activePort={activePort}
-              cargoTypes={cargoTypes}
+              cargoTypes={tankData}
               isExpanded={timeTrackingExpanded}
               onExpandedChange={setTimeTrackingExpanded}
             />

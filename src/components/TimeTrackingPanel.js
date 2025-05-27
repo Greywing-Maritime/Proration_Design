@@ -129,7 +129,10 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
         </h4>
         
         {Object.entries(portData.breakdown).map(([cargoId, data]) => {
-          const cargoInfo = cargoTypes[cargoId];
+          // Map tank IDs to tankData keys (e.g., "7W" -> "TANK_7W")
+          const tankDataKey = `TANK_${cargoId}`;
+          const cargoInfo = cargoTypes[tankDataKey];
+          
           if (!cargoInfo) return null;
 
           return (
@@ -286,6 +289,53 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
     
     const isAllPorts = portName === 'All Ports';
 
+    // Calculate port-level aggregates for waiting, laytime, and deductions
+    let totalWaiting = 0;
+    let totalLaytime = 0;
+    let totalDeductions = 0;
+
+    if (portData.breakdown) {
+      Object.values(portData.breakdown).forEach(cargoData => {
+        const waiting = parseTimeToMinutes(cargoData.waiting || '0h 0m');
+        const laytime = parseTimeToMinutes(cargoData.laytime || '0h 0m');
+        const deductions = parseTimeToMinutes(cargoData.deductions || '0h 0m');
+        
+        totalWaiting += waiting;
+        totalLaytime += laytime;
+        totalDeductions += deductions;
+      });
+    }
+
+    // Helper function to parse time strings to minutes
+    function parseTimeToMinutes(timeStr) {
+      if (!timeStr) return 0;
+      const parts = timeStr.match(/(\d+)h\s*(\d+)m/) || timeStr.match(/(\d+)h/) || timeStr.match(/(\d+)m/);
+      if (!parts) return 0;
+      
+      if (timeStr.includes('h') && timeStr.includes('m')) {
+        return parseInt(parts[1]) * 60 + parseInt(parts[2]);
+      } else if (timeStr.includes('h')) {
+        return parseInt(parts[1]) * 60;
+      } else if (timeStr.includes('m')) {
+        return parseInt(parts[1]);
+      }
+      return 0;
+    }
+
+    // Helper function to format minutes back to time string
+    function formatMinutesToTime(minutes) {
+      if (minutes === 0) return '0h 0m';
+      const hours = Math.floor(minutes / 60);
+      const mins = minutes % 60;
+      if (hours > 0 && mins > 0) {
+        return `${hours}h ${mins}m`;
+      } else if (hours > 0) {
+        return `${hours}h 0m`;
+      } else {
+        return `0h ${mins}m`;
+      }
+    }
+
     return (
       <div style={{ marginBottom: '20px' }}>
         <div style={{ 
@@ -298,7 +348,8 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
           <div style={{ 
             display: 'flex', 
             justifyContent: 'space-between', 
-            alignItems: 'center' 
+            alignItems: 'center',
+            marginBottom: '12px'
           }}>
             <span style={{ fontSize: '13px', fontWeight: '600', color: '#202124' }}>
               {isAllPorts ? 'Total Voyage Time:' : 'Total Port Time:'}
@@ -307,6 +358,39 @@ const TimeTrackingPanel = ({ timeTracking, activePort, cargoTypes, isExpanded, o
               {portData.totalTime}
             </span>
           </div>
+
+          {/* Port-level time breakdown */}
+          {!isAllPorts && portData.breakdown && (
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '1fr 1fr 1fr', 
+              gap: '8px',
+              fontSize: '11px'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ color: '#F9AB00', fontWeight: '600' }}>
+                  {formatMinutesToTime(totalWaiting)}
+                </div>
+                <div style={{ color: '#9AA0A6', fontSize: '10px' }}>Waiting</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ color: '#34A853', fontWeight: '600' }}>
+                  {formatMinutesToTime(totalLaytime)}
+                </div>
+                <div style={{ color: '#9AA0A6', fontSize: '10px' }}>Laytime Used</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ 
+                  color: totalDeductions > 0 ? '#EA4335' : '#9AA0A6', 
+                  fontWeight: '600' 
+                }}>
+                  {formatMinutesToTime(totalDeductions)}
+                </div>
+                <div style={{ color: '#9AA0A6', fontSize: '10px' }}>Deductions</div>
+              </div>
+            </div>
+          )}
+
           {isAllPorts && (
             <div style={{ 
               marginTop: '8px',

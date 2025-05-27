@@ -113,12 +113,17 @@ const FloatingSituationalAwarenessPanel = ({
     // };
 
     if (port === 'Kuala Tanjung') {
-      // For Kuala Tanjung, 'totalLaytime' from cargoData is the NET laytime.
-      // The UI displays this as "Laytime Used" if no further deductions are shown.
+      // For Kuala Tanjung, calculate gross laytime and deductions separately
       if (data.laytimeCalculation && data.laytimeCalculation.totalLaytime) {
         stats.laytime = parseDuration(data.laytimeCalculation.totalLaytime); // This is 50h 15m
       }
-      stats.deductions = 0; // As totalLaytime is already net.
+      
+      // Calculate deductions by summing 'deduction' type events
+      data.timeline.forEach(event => {
+        if (event.timeType === 'deduction' && event.duration && event.duration !== '0m' && event.duration !== 'ongoing') {
+          stats.deductions += parseDuration(event.duration);
+        }
+      });
 
       // Calculate waiting time by summing 'waiting' type events
       data.timeline.forEach(event => {
